@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/ESB/framework/audit/audit_activities_v1"
+	 targetNamespace="http://www.tibco.com/ESB/framework/audit/audit_activities_v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="logEventBase" type="log_event_base_type"/>
+	<xs:element name="appContext" type="nvp_list_type"/>
+
+	<!-- Audit activities schema-->
+	<xs:element name="logEventActivityIn" type="log_event_activity_in_type"/>
+	<xs:element name="getLogEventsActivityIn" type="get_log_events_activity_in_type"/>
+	<xs:element name="getLogEventsActivityOut" type="get_log_events_activity_out_type"/>
+
+	<!--****************************************************************************-->
+	<!-- input for logEvent Activity-->
+	<xs:complexType name="log_event_activity_in_type">
+		<xs:sequence>
+			<xs:element name="logEventRecord" type="log_event_record_type"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- input for logEvent Activity-->
+	<xs:complexType name="log_event_record_type">
+		<xs:sequence>
+			<xs:element name="log" type="log_event_base_type"/>
+			<xs:element name="appContext" type="nvp_list_type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- input for getLogEvents activity -->
+	<xs:complexType name="get_log_events_activity_in_type">
+		<xs:sequence>
+			<xs:element name="contextId" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- output for getLogEvents activity -->
+	<xs:complexType name="get_log_events_activity_out_type">
+		<xs:sequence>
+			<xs:element name="logEventRecord" type="log_event_record_type" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- base log event  -->
+	<xs:complexType name="log_event_base_type">
+		<xs:sequence>
+			<xs:element name="contextId" type="xs:string"/>
+			<xs:element name="timestamp" type="xs:dateTime"/>
+			<xs:element name="processPath" type="xs:string"/>
+			<xs:element name="role" type="xs:string"/>
+			<xs:element name="code" type="xs:string" minOccurs="0"/>
+			<xs:element name="txt" type="xs:string" minOccurs="0"/>
+
+			<!-- BASE 64 encoded XML -->
+			<xs:element name="bodyTxt" type="base64_body_type" minOccurs="0"/>
+			<xs:element name="customStep" type="xs:string" minOccurs="0"/>
+			<xs:element name="error" type="error_type" minOccurs="0"/>
+			<xs:element name="monitoringLogicProps" type="nvp_list_type" minOccurs="0"/>
+			<!-- BASE 64 encoded XML -->
+			<xs:element name="monitoringLogicBody" type="base64_body_type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- error attributes -->
+	<xs:complexType name="error_type">
+		<xs:sequence>			
+			<xs:element name="errType" type="xs:string" />
+			<xs:element name="errSeverity" type="xs:string" />
+			<xs:element name="errProcessStack" type="xs:string" minOccurs="0"/>
+			<xs:element name="errInputData" type="xs:string" minOccurs="0"/>
+			<xs:element name="errStackTrace" type="xs:string" minOccurs="0"/>
+			<xs:element name="errIsNonTerminal" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--Unrestricted NVP structure-->
+	<xs:complexType name="nvp_list_type">
+		<xs:sequence>
+			<xs:element name="nvpElement" type="nvp_element_type" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<xs:complexType name="nvp_element_type">
+		<xs:sequence>
+			<xs:element name="name" type="nvp_element_name_type"/>
+			<xs:element name="value" type="nvp_element_value_type"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<xs:simpleType name="nvp_element_name_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="nvp_element_value_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="base64_body_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

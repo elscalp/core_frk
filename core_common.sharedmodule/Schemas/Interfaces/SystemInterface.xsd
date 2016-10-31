@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/ESB/framework/utimlities/system_v1"
+	 targetNamespace="http://www.tibco.com/ESB/framework/utimlities/system_v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="managedExit" type="managed_exit_type"/>
+	<xs:element name="checkSys_MSSQL_JDBC" type="checksys_mssql_jdbc_type"/>
+	<xs:element name="checkSys_ORA_JDBC" type="checksys_ora_jdbc_type"/>
+	<xs:element name="checkSys_SOAP_HTTP" type="checksys_soap_http_type"/>
+	<xs:element name="managedExitVariable" type="managedExit_type"/>
+	<xs:complexType name="managed_exit_type">
+		<xs:sequence>
+			<xs:element name="traceCustomTag" type="xs:string"/>
+			<xs:element name="reason" type="xs:string"/>
+			<xs:element name="starterSuspendDelayMS" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="checksys_mssql_jdbc_type">
+		<xs:sequence>
+			<xs:element name="errorClass" type="xs:string"/>
+			<xs:element name="errorMessage" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="checksys_ora_jdbc_type">
+		<xs:sequence>
+			<xs:element name="errorClass" type="xs:string"/>
+			<xs:element name="errorMessage" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="checksys_soap_http_type">
+		<xs:sequence>
+			<xs:element name="errorClass" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="managedExit_type">
+		<xs:sequence>
+			<xs:element name="shutdownRequested" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsv:DocumentRoot xmlns:jsv="http://tns.tibco.com/bw/model/core/jobSV">
+  <jobSharedVariables>
+    <jobSharedVariable name="processContextStatus" type="{http://www.tibco.com/ESB/framework/context/process_context_v1}processContextStatus" initialValueMode="none" initialValue=""/>
+    <jobSharedVariable name="processContext" type="{http://www.tibco.com/ESB/framework/context/process_context_v1}processContext" initialValueMode="none"/>
+    <jobSharedVariable name="processContextMsgBody" type="{http://www.tibco.com/ESB/framework/context/process_context_v1}processContextMsgBody" initialValueMode="none"/>
+    <jobSharedVariable name="onErrorMonitoringLogic" type="{http://www.tibco.com/ESB/framework/context/process_context_v1}onErrorMonitLogic" initialValueMode="none" initialValue=""/>
+  </jobSharedVariables>
+  <import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/ESB/framework/context/process_context_v1" location="../Schemas/Context/ProcessContext.xsd"/>
+  <import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/ESB/framework/Audit/monitoring_logic_event_v1" location="../Schemas/Audit/MonitoringLogicEvent.xsd"/>
+</jsv:DocumentRoot>

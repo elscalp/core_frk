@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/ESB/framework/messaging/common_types_v1"
+	 targetNamespace="http://www.tibco.com/ESB/framework/messaging/common_types_v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+
+	<!--***************************************************************************-->
+	<!--	Shared types in service framework including                   		-->
+	<!--	messaging headers, process context, exception handling 		-->
+	<!--	and logging											-->
+	<!--***************************************************************************-->
+	<!---->
+	<!-- Generic types -->
+	<!---->
+	<xs:complexType name="nvp_list_type">
+		<xs:sequence>
+			<xs:element name="nvpList">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="nvpElement" type="nvp_element_type" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<xs:complexType name="nvp_element_type">
+		<xs:attribute name="name" type="nvp_element_name_type" use="required"/>
+		<xs:attribute name="value" type="nvp_element_value_type" use="required"/>
+	</xs:complexType>
+
+	<!---->
+	<xs:simpleType name="nvp_element_name_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="nvp_element_value_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="512"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="long_nvp_list_type">
+		<xs:sequence>
+			<xs:element name="nvpList">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="nvpElement" type="long_nvp_element_type" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<xs:complexType name="long_nvp_element_type">
+		<xs:attribute name="name" type="nvp_element_name_type" use="required"/>
+		<xs:attribute name="value" type="long_nvp_element_value_type" use="required"/>
+	</xs:complexType>
+
+	<!---->
+	<xs:simpleType name="long_nvp_element_value_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:complexType name="sequence_any_type">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<!-- Transverse types -->
+	<!---->
+	<xs:simpleType name="layer_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CI"/>
+			<xs:enumeration value="SM"/>
+			<xs:enumeration value="EXT"/>
+			<xs:enumeration value="FRK"/>
+			<xs:enumeration value="UNDEF"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="area_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="logical_domain_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:element name="component" type="component_type"/>
+	<xs:complexType name="component_type">
+		<xs:sequence>
+			<xs:element name="componentName" type="component_name_type"/>
+			<xs:element name="componentInstance" type="component_instance_type"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<xs:simpleType name="component_name_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="component_instance_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="operation_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="msg_action_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Flow Context type -->
+	<xs:element name="flowContext" type="flow_context_type"/>
+	<xs:complexType name="flow_context_type">
+		<xs:sequence>
+			<xs:element name="flowName" type="flow_name_type"/>
+			<xs:element name="flowId" type="flow_id_type"/>
+			<xs:element name="serviceName" type="service_name_type"/>
+			<xs:element name="serviceId" type="service_id_type"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Message Flow Context type -->
+	<xs:element name="msgFlowContext" type="msg_flow_context_type"/>
+	<xs:complexType name="msg_flow_context_type">
+		<xs:sequence>
+			<xs:element name="flowName" type="flow_name_type"/>
+			<xs:element name="flowId" type="flow_id_type"/>
+			<xs:element name="serviceName" type="service_name_type"/>
+			<xs:element name="serviceId" type="service_id_type"/>
+			<xs:element name="ctxId" type="context_id_type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Source Infomation Structure -->
+	<xs:element name="sourceInfo" type="location_info_type"/>
+	<xs:complexType name="location_info_type">
+		<xs:sequence>
+			<xs:element name="area" type="area_type"/>
+			<xs:element name="layer" type="layer_type"/>
+			<xs:element name="component" type="component_type"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<xs:simpleType name="flow_name_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="flow_id_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="service_name_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="correlation_trace_id_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="service_id_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="context_id_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="process_stack_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="process_path_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="destination_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<!-- messaging headers types -->
+	<!---->
+	<!---->
+	<xs:simpleType name="msg_id_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="external_tx_id_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="correlation_id_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<!-- Message header batchInfo structure -->
+	<!---->
+	<xs:element name="batchInfo" type="batch_info_type"/>
+	<xs:complexType name="batch_info_type">
+		<xs:sequence>
+			<xs:element name="batchName" type="batch_name_type" minOccurs="0"/>
+			<xs:element name="recordNo" type="batch_record_no_type" minOccurs="0"/>
+			<xs:element name="recordRef" type="batch_record_ref_type" minOccurs="0"/>
+			<xs:element name="batchSize" type="batch_size_type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<xs:simpleType name="batch_name_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="batch_record_no_type">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="batch_record_ref_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="batch_size_type">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+
+	
+
+	<!---->
+	<xs:simpleType name="msg_resubmission_indicator_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="msg_resubmission_no_type">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="msg_sequencing_key_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- General Audit types -->
+	<xs:simpleType name="log_code_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="custom_log_step_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="log_role_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INFO"/>
+			<xs:enumeration value="WARNING"/>
+			<xs:enumeration value="DEBUG"/>
+			<xs:enumeration value="ERROR"/>
+			<xs:enumeration value="ENTRY"/>
+			<xs:enumeration value="EXIT"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:element name="monitoringLogic" type="monitoring_logic_type"/>
+	<xs:complexType name="monitoring_logic_type">
+		<xs:sequence>
+			<xs:element name="enableMonitoringLogic" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="monitoringProperties" type="long_nvp_list_type" minOccurs="0"/>
+			<xs:element name="monitoringBody" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##any" processContents="skip"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<xs:simpleType name="log_txt_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2048"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="string_msg_body_type">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+</xs:schema>

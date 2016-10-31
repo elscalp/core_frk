@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/ESB/framework/messaging/msg_header_v1"
+	 xmlns:cm_types="http://www.tibco.com/ESB/framework/messaging/common_types_v1"
+	 targetNamespace="http://www.tibco.com/ESB/framework/messaging/msg_header_v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.tibco.com/ESB/framework/messaging/common_types_v1" schemaLocation="CommonTypes.xsd"/>
+
+	<!--***************************************************************************-->
+	<!--	Message Header structure                                                                         -->
+	<!--***************************************************************************-->
+	<!---->
+	<xs:element name="msgHeader" type="msg_header_type"/>
+	<xs:complexType name="msg_header_type">
+		<xs:sequence>
+			<xs:element name="msgTimestamp" type="xs:dateTime"/>
+			<xs:element name="msgId" type="cm_types:msg_id_type"/>
+			<xs:element name="sourceLocation" type="cm_types:location_info_type"/>
+			<xs:element name="msgFlowContext" type="cm_types:msg_flow_context_type"/>
+			<xs:element name="msgAction" type="cm_types:msg_action_type"/>
+			<xs:element name="routingProp" type="cm_types:nvp_list_type" minOccurs="0"/>
+			<xs:element name="externalTxId" type="cm_types:external_tx_id_type" minOccurs="0"/>
+			<xs:element name="correlationId" type="cm_types:correlation_id_type" minOccurs="0"/>
+			<xs:element name="privateContext" type="cm_types:sequence_any_type" minOccurs="0"/>
+			<xs:element name="batchInfo" type="cm_types:batch_info_type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
