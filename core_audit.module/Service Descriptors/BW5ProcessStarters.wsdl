@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns:tns="http://www.tibco.com/BW5ProcessStarters/1364208078134/interface" name="BW5ProcessStarters-Interface" targetNamespace="http://www.tibco.com/BW5ProcessStarters/1364208078134/interface" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <message name="BW5ProcessStartersRequest"/>
+  <portType name="BW5ProcessStarters-PortType">
+    <operation name="BW5ProcessStarters-Operation">
+      <input message="tns:BW5ProcessStartersRequest"/>
+    </operation>
+  </portType>
+</definitions>

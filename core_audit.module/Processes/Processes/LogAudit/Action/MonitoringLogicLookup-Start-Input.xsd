@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:bwCustomFunctions="java://com.tibco.tibcobw.customfunctions.bwCustomFunctions" xmlns:ns0="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:ns1="www.tibco.com/plugin/Sleep" xmlns:ns6="http://www.tibco.com/ESB/framework/messaging/common_types_v1" xmlns:ns7="http://www.tibco.com/ESB/framework/exception_handling/svc_exception_v1" xmlns:ns72="http://www.tibco.com/ESB/framework/messaging/msg_header_v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx4="http://www.tibco.com/ESB/framework/audit/audit_msg_v1" xmlns:pfx5="http://www.tibco.com/ESB/framework/context/process_context_v1" xmlns:pfx6="http://www.tibco.com/ESB/framework/Audit/monitoring_logic_event_v1" xmlns:pfx7="http://www.tibco.com/ESB/framework/messaging/xml_msg_v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="/CORE_AUDIT/Processes/LogAudit/Action/MonitoringLogicLookup-Start-Input.xsd">
+    <xsd:import namespace="http://www.tibco.com/ESB/framework/audit/audit_msg_v1" schemaLocation="../../../../../../workspace-core_common/core_common.sharedmodule/Schemas/Audit/AuditMsg.xsd"/>
+    <xsd:element name="input">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="pfx4:logEvent"/>
+                <xsd:element ref="pfx4:serviceContext"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

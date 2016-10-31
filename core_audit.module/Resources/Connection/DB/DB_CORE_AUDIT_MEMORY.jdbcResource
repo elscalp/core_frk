@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://xsd.tns.tibco.com/amf/models/sharedresource/jdbc" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmi:id="_RtPJgJ8AEea9Jtlkbf7b-w" name="Connection.DB.DB_CORE_AUDIT_MEMORY" type="jdbc:JdbcDataSource">
+  <jndi:configuration xsi:type="jdbc:JdbcDataSource" xmi:id="_RtPJgZ8AEea9Jtlkbf7b-w" username="%%CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/User%%" password="%%CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/Password%%">
+    <substitutionBindings xmi:id="_RtPJgp8AEea9Jtlkbf7b-w" template="maxConnections" propName="Conn"/>
+    <substitutionBindings xmi:id="_RtgPQJ8AEea9Jtlkbf7b-w" template="username" propName="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/User"/>
+    <substitutionBindings xmi:id="_Rtm88J8AEea9Jtlkbf7b-w" template="password" propName="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/Password"/>
+    <connectionConfig xsi:type="jdbc:NonXaConnection" xmi:id="_RtPJg58AEea9Jtlkbf7b-w" jdbcDriver="org.hsqldb.jdbc.JDBCDriver" dbURL="%%CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/JDBCURL%%">
+      <substitutionBindings xmi:id="_RtPJhJ8AEea9Jtlkbf7b-w" template="loginTimeout" propName="Timeout"/>
+      <substitutionBindings xmi:id="_RtYTcJ8AEea9Jtlkbf7b-w" template="dbURL" propName="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/JDBCURL"/>
+    </connectionConfig>
+  </jndi:configuration>
+</jndi:namedResource>

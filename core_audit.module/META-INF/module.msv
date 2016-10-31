@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<msv:DocumentRoot xmlns:msv="http://tns.tibco.com/bw/model/core/moduleSV">
+  <moduleSharedVariables>
+    <moduleSharedVariable name="CORE_AUDIT.Resources.Variables.Shared.Resubmission.Busy" type="{http://tns.tibco.com/bw/model/core/moduleSV/0215ffbe-c478-4e91-96fa-115d68a7c740}root" initialValueMode="literal" initialValue="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;ns0:root xmlns:ns0=&quot;http://tns.tibco.com/bw/model/core/moduleSV/0215ffbe-c478-4e91-96fa-115d68a7c740&quot;>&#xA;    &lt;busy>false&lt;/busy>&#xA;&lt;/ns0:root>"/>
+  </moduleSharedVariables>
+  <xMLNSPrefixMap key="ns" value="http://tns.tibco.com/bw/model/core/moduleSV/0215ffbe-c478-4e91-96fa-115d68a7c740"/>
+  <xSISchemaLocation key="http://tns.tibco.com/bw/model/core/moduleSV/0215ffbe-c478-4e91-96fa-115d68a7c740" value="file:/Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Resources/Variables/Shared/Resubmission/Busy.xsd"/>
+</msv:DocumentRoot>
