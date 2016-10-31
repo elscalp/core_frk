@@ -7,6 +7,7 @@
 	 attributeFormDefault="unqualified">
 	<xs:element name="logEventBase" type="log_event_base_type"/>
 	<xs:element name="appContext" type="nvp_list_type"/>
+	
 
 	<!-- Audit activities schema-->
 	<xs:element name="logEventActivityIn" type="log_event_activity_in_type"/>
