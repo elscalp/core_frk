@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://xsd.tns.tibco.com/amf/models/sharedresource/jdbc" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmi:id="_-GWbsJ--EeaYatYkonS-3w" name="CORE_AUDIT.Resources.Connection.DB.DB_CORE_AUDIT" type="jdbc:JdbcDataSource">
+  <jndi:configuration xsi:type="jdbc:JdbcDataSource" xmi:id="_-GWbsZ--EeaYatYkonS-3w" username="%%CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/User%%" password="%%CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/Password%%">
+    <substitutionBindings xmi:id="_-GWbsp--EeaYatYkonS-3w" template="maxConnections" propName="Conn"/>
+    <substitutionBindings xmi:id="_-G_78J--EeaYatYkonS-3w" template="username" propName="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/User"/>
+    <substitutionBindings xmi:id="_-HHQsJ--EeaYatYkonS-3w" template="password" propName="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/Password"/>
+    <connectionConfig xsi:type="jdbc:NonXaConnection" xmi:id="_-GWbs5--EeaYatYkonS-3w" jdbcDriver="com.microsoft.sqlserver.jdbc.SQLServerDriver" dbURL="%%CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/JDBCURL%%">
+      <substitutionBindings xmi:id="_-GWbtJ--EeaYatYkonS-3w" template="loginTimeout" propName="Timeout"/>
+      <substitutionBindings xmi:id="_-G3ZEJ--EeaYatYkonS-3w" template="dbURL" propName="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/JDBCURL"/>
+    </connectionConfig>
+  </jndi:configuration>
+</jndi:namedResource>

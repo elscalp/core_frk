@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ae="http://www.tibco.com/xmlns/ae2xsd/2002/05" targetNamespace="http://www.tibco.com/xmlns/ae2xsd/2002/05" elementFormDefault="qualified" attributeFormDefault="qualified">
+    <complexType ae:type="assocList" name="assocList">
+        <sequence>
+            <any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+        </sequence>
+    </complexType>
+    <simpleType ae:type="binary" name="binary">
+        <restriction base="base64Binary"/>
+    </simpleType>
+    <simpleType ae:type="boolean" name="boolean">
+        <restriction base="boolean"/>
+    </simpleType>
+    <simpleType ae:type="char" name="char">
+        <restriction base="string"/>
+    </simpleType>
+    <simpleType ae:type="charString" name="charString">
+        <restriction base="string"/>
+    </simpleType>
+    <complexType name="classType"/>
+    <simpleType ae:type="date" name="date">
+        <restriction base="date"/>
+    </simpleType>
+    <simpleType ae:type="dateTime" name="dateTime">
+        <restriction base="dateTime"/>
+    </simpleType>
+    <simpleType ae:type="fixed" name="fixed">
+        <restriction base="decimal"/>
+    </simpleType>
+    <simpleType ae:type="i1" name="i1">
+        <restriction base="byte"/>
+    </simpleType>
+    <simpleType ae:type="i2" name="i2">
+        <restriction base="short"/>
+    </simpleType>
+    <simpleType ae:type="i4" name="i4">
+        <restriction base="int"/>
+    </simpleType>
+    <simpleType ae:type="i8" name="i8">
+        <restriction base="long"/>
+    </simpleType>
+    <simpleType ae:type="interval" name="interval">
+        <restriction base="duration"/>
+    </simpleType>
+    <complexType name="new-operationReplyType"/>
+    <complexType name="new-operationRequestType">
+        <sequence>
+            <element name="__caret_closure_caret_" form="unqualified" nillable="true" type="anyType" minOccurs="0"/>
+            <element name="__caret_userClosure_caret_" form="unqualified" nillable="true" type="anyType" minOccurs="0"/>
+        </sequence>
+    </complexType>
+    <complexType name="operationBaseType">
+        <sequence>
+            <element name="closure" type="anyType" minOccurs="0"/>
+            <element name="userClosure" type="anyType" minOccurs="0"/>
+        </sequence>
+    </complexType>
+    <complexType name="operationExceptionType"/>
+    <complexType name="operationReplyType">
+        <complexContent>
+            <extension base="ae:operationBaseType"/>
+        </complexContent>
+    </complexType>
+    <complexType name="operationRequestType">
+        <complexContent>
+            <extension base="ae:operationBaseType"/>
+        </complexContent>
+    </complexType>
+    <simpleType ae:type="r4" name="r4">
+        <restriction base="float"/>
+    </simpleType>
+    <simpleType ae:type="r8" name="r8">
+        <restriction base="double"/>
+    </simpleType>
+    <simpleType ae:type="string" name="string">
+        <restriction base="string"/>
+    </simpleType>
+    <simpleType ae:type="time" name="time">
+        <restriction base="time"/>
+    </simpleType>
+    <simpleType ae:type="ui1" name="ui1">
+        <restriction base="unsignedByte"/>
+    </simpleType>
+    <simpleType ae:type="ui2" name="ui2">
+        <restriction base="unsignedShort"/>
+    </simpleType>
+    <simpleType ae:type="ui4" name="ui4">
+        <restriction base="unsignedInt"/>
+    </simpleType>
+    <simpleType ae:type="ui8" name="ui8">
+        <restriction base="unsignedLong"/>
+    </simpleType>
+    <complexType name="unionType"/>
+    <simpleType ae:type="void" name="void">
+        <restriction base="string">
+            <length value="0"/>
+        </restriction>
+    </simpleType>
+    <element name="assocList" type="ae:assocList"/>
+    <attribute name="default" type="normalizedString"/>
+    <attribute name="directory" type="normalizedString"/>
+    <attribute name="key" type="boolean"/>
+    <attribute name="name" type="normalizedString"/>
+    <attribute name="readable" type="boolean"/>
+    <attribute name="sequenceGN" type="normalizedString"/>
+    <attribute name="writeable" type="boolean"/>
+</schema>

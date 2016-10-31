@@ -1,0 +1,425 @@
+Migrating Business Works 5.x projects to version 6 using arguments:: 
+[Target Project Directory: /Users/elghazali/tibco/workspace-core_audit/src ]
+[Source Project Directory: /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src ]
+[Project Name: src ]
+
+2016/11/01 00:07:47 [INFO] Creating JDBC Shared Resource for URI/Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Resources/Connection/DB/DB_CORE_AUDIT.sharedjdbc
+2016/11/01 00:07:47 [INFO] Creating JDBC Shared Resource for URI/Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Resources/Connection/DB/DB_CORE_AUDIT_MEMORY.sharedjdbc
+2016/11/01 00:07:47 [INFO] Migrating "/Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Resources/Variables/Shared/Resubmission/Busy.sharedvariable" Resource
+2016/11/01 00:07:47 [INFO] Migrating Schema
+2016/11/01 00:07:47 [INFO] Sleep Activity "Sleep" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Sleep Activity
+2016/11/01 00:07:47 [INFO] Migrating activity with name SelectRules
+2016/11/01 00:07:47 [INFO] Migrating activity with name Select Prop
+2016/11/01 00:07:47 [INFO] Mapper activity "Map MonitLogicEvent" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Mapper Activity
+2016/11/01 00:07:47 [INFO] Migrating JMS Send Activity activity with name JMS Queue Sender
+2016/11/01 00:07:47 [WARN] 1:
+12016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 1
+	Remaining Processes to Migrate = 12
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [ERROR] java.io.FileNotFoundException: /Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Processes/LogAudit/Flow/file%3A/Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Processes/LogAudit/Flow/main-Start-Input.xsd (No such file or directory):
+java.io.FileNotFoundException: /Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Processes/LogAudit/Flow/file%3A/Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Processes/LogAudit/Flow/main-Start-Input.xsd (No such file or directory)
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.handleDemandLoadException(ResourceSetImpl.java:319)
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:278)
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.getResource(ResourceSetImpl.java:406)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.XslMappingUtils.findElementDeclaration(XslMappingUtils.java:248)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.getIterationElementDeclaration(Bw6ProcessBuilder.java:1388)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildIterateGroupActivity(Bw6ProcessBuilder.java:1247)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildScope(Bw6ProcessBuilder.java:1159)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:883)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildFlow(Bw6ProcessBuilder.java:713)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildProcess(Bw6ProcessBuilder.java:396)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.build(Bw6ProcessBuilder.java:291)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:526)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:505)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:198)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:173)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:101)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:83)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProcesses(CompositeApplicationGenerator.java:991)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.writeCompositeAppProject(CompositeApplicationGenerator.java:480)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProject(CompositeApplicationGenerator.java:316)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generate(CompositeApplicationGenerator.java:176)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:159)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:100)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.migrateProject(ProjectMigrationJob.java:224)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.startMigration(ProjectMigrationJob.java:211)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.run(ProjectMigrationJob.java:180)
+org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+2016/11/01 00:07:47 [ERROR] java.io.FileNotFoundException: /Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Processes/LogAudit/Action/file%3A/Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Processes/LogAudit/Action/MonitoringLogicLookup-Start-Input.xsd (No such file or directory):
+java.io.FileNotFoundException: /Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Processes/LogAudit/Action/file%3A/Users/elghazali/tibco/workspace-core_audit/src/CORE_AUDIT/Processes/LogAudit/Action/MonitoringLogicLookup-Start-Input.xsd (No such file or directory)
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.handleDemandLoadException(ResourceSetImpl.java:319)
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:278)
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.getResource(ResourceSetImpl.java:406)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.XslMappingUtils.findElementDeclaration(XslMappingUtils.java:248)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.ActivityInputXslMappingConverter.convertCopyOfBindingForRepeatingElemBinding(ActivityInputXslMappingConverter.java:1101)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.ActivityInputXslMappingConverter.convertBindingFormula(ActivityInputXslMappingConverter.java:930)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.ActivityInputXslMappingConverter.convertBindingFormula(ActivityInputXslMappingConverter.java:935)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.ActivityInputXslMappingConverter.convert(ActivityInputXslMappingConverter.java:222)
+com.tibco.bw.tools.migrator.v6.utils.Bw6ProcessBuilderUtils.migrateActivityInputXslMapping(Bw6ProcessBuilderUtils.java:622)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.migrateActivitySignatureAndMapping(Bw6ProcessBuilder.java:3370)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:921)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildFlow(Bw6ProcessBuilder.java:713)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildIterateGroupActivity(Bw6ProcessBuilder.java:1318)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildScope(Bw6ProcessBuilder.java:1159)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:883)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildFlow(Bw6ProcessBuilder.java:713)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildProcess(Bw6ProcessBuilder.java:396)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.build(Bw6ProcessBuilder.java:291)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:526)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:505)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:198)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:173)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:101)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:83)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProcesses(CompositeApplicationGenerator.java:991)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.writeCompositeAppProject(CompositeApplicationGenerator.java:480)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProject(CompositeApplicationGenerator.java:316)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generate(CompositeApplicationGenerator.java:176)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:159)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:100)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.migrateProject(ProjectMigrationJob.java:224)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.startMigration(ProjectMigrationJob.java:211)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.run(ProjectMigrationJob.java:180)
+org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 2
+	Remaining Processes to Migrate = 11
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Migrating JMS Queue Receiver Event Source activity with name JMS Queue Receiver
+2016/11/01 00:07:47 [INFO] Start to migrate Parse JSON Activity...
+2016/11/01 00:07:47 [INFO] Creating EObject activity
+2016/11/01 00:07:47 [INFO] Confirm Activity "Confirm" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Confirm Activity
+2016/11/01 00:07:47 [INFO] Configuring Confirm Event to [JMS Queue Receiver]
+2016/11/01 00:07:47 [INFO] BWAssign Activity "BWE" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating BWAssign Activity
+2016/11/01 00:07:47 [INFO] Confirm Activity "Confirm1" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Confirm Activity
+2016/11/01 00:07:47 [INFO] Configuring Confirm Event to [JMS Queue Receiver]
+2016/11/01 00:07:47 [INFO] BWAssign Activity "SE_DEFAULT" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating BWAssign Activity
+2016/11/01 00:07:47 [INFO] Confirm Activity "Confirm1" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Confirm Activity
+2016/11/01 00:07:47 [INFO] Configuring Confirm Event to [JMS Queue Receiver]
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 3
+	Remaining Processes to Migrate = 10
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Get Shared Variable Activity "readBusy" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Get Shared Variable
+2016/11/01 00:07:47 [INFO] The Shared Resource {CORE_AUDIT/Resources/Variables/Shared/Resubmission/Busy.sharedvariable} is mapped to property {CORE_AUDIT.Resources.Variables.Shared.Resubmission.Busy}
+2016/11/01 00:07:47 [INFO] Set Shared Variable Activity "Busy" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Set Shared Variable
+2016/11/01 00:07:47 [INFO] The Shared Resource {CORE_AUDIT/Resources/Variables/Shared/Resubmission/Busy.sharedvariable} is mapped to property {CORE_AUDIT.Resources.Variables.Shared.Resubmission.Busy}
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 4
+	Remaining Processes to Migrate = 9
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Migrating activity with name ReadResubRecord
+2016/11/01 00:07:47 [INFO] Creating parse XML activity
+2016/11/01 00:07:47 [INFO] Creating parse XML activity
+2016/11/01 00:07:47 [INFO] Creating parse XML activity
+2016/11/01 00:07:47 [INFO] Creating parse XML activity
+2016/11/01 00:07:47 [INFO] Creating parse XML activity
+2016/11/01 00:07:47 [INFO] Mapper activity "Map xmlMsg" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Mapper Activity
+2016/11/01 00:07:47 [INFO] Migrating JMS Send Activity activity with name JMS Queue Sender
+2016/11/01 00:07:47 [WARN] 1:
+12016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 5
+	Remaining Processes to Migrate = 8
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Migrating activity with name UpdateResubRecord
+2016/11/01 00:07:47 [INFO] Migrating activity with name UpdateResubRecord1
+2016/11/01 00:07:47 [INFO] Migrating activity with name UpdateResubRecord1
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 6
+	Remaining Processes to Migrate = 7
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Timer EventSource "Timer" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Timer EventSource
+2016/11/01 00:07:47 [INFO] Migrating Timer EventSource StartTime: Wed Jan 13 21:56:05 CET 2010
+2016/11/01 00:07:47 [ERROR] Unparseable date: "Wed Jan 13 21:56:05 CET 2010":
+Unparseable date: "Wed Jan 13 21:56:05 CET 2010"
+java.text.DateFormat.parse(DateFormat.java:366)
+com.tibco.bw.tools.migrator.v6.palette.general.activities.TimerEventSourceMigrator.migrateStartTime(TimerEventSourceMigrator.java:146)
+com.tibco.bw.tools.migrator.v6.palette.general.activities.TimerEventSourceMigrator.migrateActivity(TimerEventSourceMigrator.java:81)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.convertActivity(Bw6ProcessBuilder.java:2752)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.convert(Bw6ProcessBuilder.java:2719)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:887)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildFlow(Bw6ProcessBuilder.java:713)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildProcess(Bw6ProcessBuilder.java:396)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.build(Bw6ProcessBuilder.java:291)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:526)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:505)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:198)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:173)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:101)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:83)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProcesses(CompositeApplicationGenerator.java:991)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.writeCompositeAppProject(CompositeApplicationGenerator.java:480)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProject(CompositeApplicationGenerator.java:316)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generate(CompositeApplicationGenerator.java:176)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:159)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:100)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.migrateProject(ProjectMigrationJob.java:224)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.startMigration(ProjectMigrationJob.java:211)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.run(ProjectMigrationJob.java:180)
+org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+2016/11/01 00:07:47 [ERROR] An Event Source's getInputType() method should never be called:
+An Event Source's getInputType() method should never be called
+com.tibco.bw.design.api.BWEventSourceSignature.getInputType(BWEventSourceSignature.java:44)
+com.tibco.bw.tools.migrator.v6.impl.Bw6ActivityTypeSignature.getActivityInputElementDecl(Bw6ActivityTypeSignature.java:100)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.migrateActivitySignatureAndMapping(Bw6ProcessBuilder.java:3369)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:921)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildFlow(Bw6ProcessBuilder.java:713)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildProcess(Bw6ProcessBuilder.java:396)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.build(Bw6ProcessBuilder.java:291)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:526)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:505)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:198)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:173)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:101)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:83)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProcesses(CompositeApplicationGenerator.java:991)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.writeCompositeAppProject(CompositeApplicationGenerator.java:480)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProject(CompositeApplicationGenerator.java:316)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generate(CompositeApplicationGenerator.java:176)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:159)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:100)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.migrateProject(ProjectMigrationJob.java:224)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.startMigration(ProjectMigrationJob.java:211)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.run(ProjectMigrationJob.java:180)
+org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+2016/11/01 00:07:47 [INFO] Migrating activity with name ReadRecordsToResub
+2016/11/01 00:07:47 [ERROR] Parent parameter may not be null:
+Parent parameter may not be null
+com.tibco.xml.datamodel.helpers.XiChild.a(XiChild.java:1249)
+com.tibco.xml.datamodel.helpers.XiChild.getIterator(XiChild.java:222)
+com.tibco.bw.plugin.config.impl.jdbc.JDBCQueryConfigPropsProvider.getPropertyValueAsParamList(JDBCQueryConfigPropsProvider.java:106)
+com.tibco.bw.plugin.config.impl.ConfigPropsImpl.getPropertyValueAsParamList(ConfigPropsImpl.java:39)
+com.tibco.bw.tools.migrator.v6.palette.jdbc.query.JDBCQueryMigrator.migrateActivity(JDBCQueryMigrator.java:119)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.convertActivity(Bw6ProcessBuilder.java:2752)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.convert(Bw6ProcessBuilder.java:2719)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:887)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:748)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:734)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildFlow(Bw6ProcessBuilder.java:709)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildProcess(Bw6ProcessBuilder.java:396)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.build(Bw6ProcessBuilder.java:291)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:526)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:505)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:198)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:173)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:101)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:83)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProcesses(CompositeApplicationGenerator.java:991)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.writeCompositeAppProject(CompositeApplicationGenerator.java:480)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProject(CompositeApplicationGenerator.java:316)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generate(CompositeApplicationGenerator.java:176)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:159)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:100)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.migrateProject(ProjectMigrationJob.java:224)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.startMigration(ProjectMigrationJob.java:211)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.run(ProjectMigrationJob.java:180)
+org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+2016/11/01 00:07:47 [INFO] Set Shared Variable Activity "notBusy0" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Set Shared Variable
+2016/11/01 00:07:47 [INFO] The Shared Resource {CORE_AUDIT/Resources/Variables/Shared/Resubmission/Busy.sharedvariable} is mapped to property {CORE_AUDIT.Resources.Variables.Shared.Resubmission.Busy}
+2016/11/01 00:07:47 [INFO] Sleep Activity "Sleep" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Sleep Activity
+2016/11/01 00:07:47 [INFO] Set Shared Variable Activity "notBusy" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Set Shared Variable
+2016/11/01 00:07:47 [INFO] The Shared Resource {CORE_AUDIT/Resources/Variables/Shared/Resubmission/Busy.sharedvariable} is mapped to property {CORE_AUDIT.Resources.Variables.Shared.Resubmission.Busy}
+2016/11/01 00:07:47 [INFO] Set Shared Variable Activity "notBusy1" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Set Shared Variable
+2016/11/01 00:07:47 [INFO] The Shared Resource {CORE_AUDIT/Resources/Variables/Shared/Resubmission/Busy.sharedvariable} is mapped to property {CORE_AUDIT.Resources.Variables.Shared.Resubmission.Busy}
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 7
+	Remaining Processes to Migrate = 6
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Migrating activity with name Drop EVT_CATALOG
+2016/11/01 00:07:47 [INFO] Migrating activity with name Drop EVT_CATALOG_PROPS
+2016/11/01 00:07:47 [INFO] Migrating activity with name Create EVT_CATALOG Table
+2016/11/01 00:07:47 [INFO] Migrating activity with name Create EVT_CATALOG_PROPS Table
+2016/11/01 00:07:47 [INFO] Migrating activity with name Create index 1
+2016/11/01 00:07:47 [INFO] Migrating activity with name Create-index-2
+2016/11/01 00:07:47 [INFO] Migrating activity with name Create-index-3
+2016/11/01 00:07:47 [INFO] Migrating activity with name Create-index-1-3
+2016/11/01 00:07:47 [INFO] Migrating activity with name Create-index-1-4
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 8
+	Remaining Processes to Migrate = 5
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 9
+	Remaining Processes to Migrate = 4
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] OnShutdown EventSource "onStartup" migration tasks :
+2016/11/01 00:07:47 [INFO] Get Shared Variable Activity "GetCtxStatus" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Get Shared Variable
+2016/11/01 00:07:47 [INFO] The Shared Resource {CORE_COMMON/Resources/Variables/Job/ProcessContextStatus.jobsharedvariable} is mapped to property {CORE_COMMON.Resources.Variables.Job.ProcessContextStatus}
+2016/11/01 00:07:47 [INFO] Get Shared Variable Activity "GetCtxStatus" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Get Shared Variable
+2016/11/01 00:07:47 [INFO] The Shared Resource {CORE_COMMON/Resources/Variables/Job/ProcessContextStatus.jobsharedvariable} is mapped to property {CORE_COMMON.Resources.Variables.Job.ProcessContextStatus}
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 10
+	Remaining Processes to Migrate = 3
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Migrating activity with name READ EVT CATALOG
+2016/11/01 00:07:47 [INFO] Migrating activity with name READ EVT CATALOG PROPS
+2016/11/01 00:07:47 [INFO] Migrating activity with name DELETE EVT CATALOG
+2016/11/01 00:07:47 [INFO] Migrating activity with name DELETE EVT CAT PROPS
+2016/11/01 00:07:47 [INFO] Migrating activity with name INSERT EVT CATALOG
+2016/11/01 00:07:47 [INFO] Migrating activity with name INSERT EVT CATALOG_PROPS
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 11
+	Remaining Processes to Migrate = 2
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Timer EventSource "Timer" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Timer EventSource
+2016/11/01 00:07:47 [INFO] Migrating Timer EventSource StartTime: Fri Dec 04 11:53:03 CET 2015
+2016/11/01 00:07:47 [ERROR] Unparseable date: "Fri Dec 04 11:53:03 CET 2015":
+Unparseable date: "Fri Dec 04 11:53:03 CET 2015"
+java.text.DateFormat.parse(DateFormat.java:366)
+com.tibco.bw.tools.migrator.v6.palette.general.activities.TimerEventSourceMigrator.migrateStartTime(TimerEventSourceMigrator.java:146)
+com.tibco.bw.tools.migrator.v6.palette.general.activities.TimerEventSourceMigrator.migrateActivity(TimerEventSourceMigrator.java:81)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.convertActivity(Bw6ProcessBuilder.java:2752)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.convert(Bw6ProcessBuilder.java:2719)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:887)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildFlow(Bw6ProcessBuilder.java:713)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildProcess(Bw6ProcessBuilder.java:396)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.build(Bw6ProcessBuilder.java:291)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:526)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:505)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:198)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:173)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:101)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:83)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProcesses(CompositeApplicationGenerator.java:991)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.writeCompositeAppProject(CompositeApplicationGenerator.java:480)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProject(CompositeApplicationGenerator.java:316)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generate(CompositeApplicationGenerator.java:176)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:159)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:100)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.migrateProject(ProjectMigrationJob.java:224)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.startMigration(ProjectMigrationJob.java:211)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.run(ProjectMigrationJob.java:180)
+org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+2016/11/01 00:07:47 [ERROR] An Event Source's getInputType() method should never be called:
+An Event Source's getInputType() method should never be called
+com.tibco.bw.design.api.BWEventSourceSignature.getInputType(BWEventSourceSignature.java:44)
+com.tibco.bw.tools.migrator.v6.impl.Bw6ActivityTypeSignature.getActivityInputElementDecl(Bw6ActivityTypeSignature.java:100)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.migrateActivitySignatureAndMapping(Bw6ProcessBuilder.java:3369)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildActivity(Bw6ProcessBuilder.java:921)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildFlow(Bw6ProcessBuilder.java:713)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.buildProcess(Bw6ProcessBuilder.java:396)
+com.tibco.bw.tools.migrator.v6.modelbuilders.process.impl.Bw6ProcessBuilder.build(Bw6ProcessBuilder.java:291)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:526)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.buildProcess(Bw6ProcessGenerator.java:505)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:198)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:173)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generateProcesses(Bw6ProcessGenerator.java:101)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.Bw6ProcessGenerator.generate(Bw6ProcessGenerator.java:83)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProcesses(CompositeApplicationGenerator.java:991)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.writeCompositeAppProject(CompositeApplicationGenerator.java:480)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generateProject(CompositeApplicationGenerator.java:316)
+com.tibco.bw.tools.migrator.v6.composite.application.generator.impl.CompositeApplicationGenerator.generate(CompositeApplicationGenerator.java:176)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:159)
+com.tibco.bw.tools.migrator.v6.impl.Bw6MigratorV2.migrate(Bw6MigratorV2.java:100)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.migrateProject(ProjectMigrationJob.java:224)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.startMigration(ProjectMigrationJob.java:211)
+com.tibco.bw.tools.migrator.v6.utils.ProjectMigrationJob$MigrationJob.run(ProjectMigrationJob.java:180)
+org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+2016/11/01 00:07:47 [INFO] Migrating activity with name SelectNotification
+2016/11/01 00:07:47 [INFO] Migrating activity with name DeleteNotification
+2016/11/01 00:07:47 [INFO] Get Shared Variable Activity "GetCtxStatus" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Get Shared Variable
+2016/11/01 00:07:47 [INFO] The Shared Resource {CORE_COMMON/Resources/Variables/Job/ProcessContextStatus.jobsharedvariable} is mapped to property {CORE_COMMON.Resources.Variables.Job.ProcessContextStatus}
+2016/11/01 00:07:47 [INFO] Get Shared Variable Activity "GetCtxStatus" migration tasks :
+2016/11/01 00:07:47 [INFO] Creating Get Shared Variable
+2016/11/01 00:07:47 [INFO] The Shared Resource {CORE_COMMON/Resources/Variables/Job/ProcessContextStatus.jobsharedvariable} is mapped to property {CORE_COMMON.Resources.Variables.Job.ProcessContextStatus}
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 12
+	Remaining Processes to Migrate = 1
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] =================================================
+2016/11/01 00:07:47 [INFO] Project: src (/Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src)
+2016/11/01 00:07:47 [INFO] Migration Statistics:
+	Total Processes = 13
+	Migrated Processes = 13
+
+
+Project Migration Complete
+2016/11/01 00:07:47 [INFO] =================================================
+
+------------------ Migration Statistics ----------------
+
+Project Migration Time [Millisecond]: 10852
+
+Process Migration Time [Millisecond]
+1. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/Processes/Resubmission/Flow/main.process: 1042
+2. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/CacheInit/Actions/CreateTables.process: 943
+3. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/Processes/LogAudit/Action/MonitoringLogicLookup.process: 2120
+4. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/Processes/Resubmission/Resubmission_timer.process: 630
+5. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/Processes/Resubmission/Action/CheckBusy.process: 253
+6. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/Common/ReloadTables.process: 1097
+7. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/EvtCtalogCacheReload/Flow/EvtCatalogCacheReload.process: 131
+8. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/CacheInit/Flow/EvtCatalogCacheInit.process: 145
+9. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/Processes/LogAudit/Flow/main.process: 208
+10. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/Processes/Resubmission/Resubmission.process: 709
+11. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/CacheInit/OnStartupEvtCatalogCacheInit.process: 441
+12. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/EvtCtalogCacheReload/EvtCatalogCacheReload.process: 723
+13. /Users/elghazali/Documents/VMWareShare/CORE_AUDIT/BW/CORE_AUDIT/src/CORE_AUDIT/Processes/LogAudit/LogAudit.process: 588
+
+Artifacts Migrated [Count]
+1. Process Migrated:13
+2. WSDL Migrated:0
+3. Schema Migrated:0
+4. XSLT Migrated:0

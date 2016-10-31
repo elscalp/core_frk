@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002">
+    <enterpriseArchive>
+        <sharedArchive name="Shared Archive">
+            <resourceType>shared.archive.resource</resourceType>
+            <authorProperty>tiblab</authorProperty>
+        </sharedArchive>
+        <processArchive name="LogEvent">
+            <resourceType>process.archive.resource</resourceType>
+            <authorProperty>florentc</authorProperty>
+            <processProperty>/CORE_AUDIT/Processes/LogAudit/LogAudit.process,/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/EvtCtalogCacheReload/EvtCatalogCacheReload.process,/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/CacheInit/OnStartupEvtCatalogCacheInit.process</processProperty>
+        </processArchive>
+        <processArchive name="Resubmission">
+            <resourceType>process.archive.resource</resourceType>
+            <authorProperty>Administrator</authorProperty>
+            <processProperty>/CORE_AUDIT/Processes/Resubmission/Resubmission_timer.process</processProperty>
+        </processArchive>
+        <versionProperty>39</versionProperty>
+        <authorProperty>tiblab</authorProperty>
+        <addServiceSettableGvars>true</addServiceSettableGvars>
+        <name>CORE_LOG</name>
+        <designer>
+            <lockedProperties/>
+            <fixedChildren/>
+            <resourceDescriptions/>
+        </designer>
+        <fileLocationProperty>C:\tibco\dev\\localdev\Framework\BUILD\EAR\CORE_AUDIT_x.y.z.ear</fileLocationProperty>
+    </enterpriseArchive>
+</Repository:repository>

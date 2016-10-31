@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:tns="http://xmlns.example.com/1448438775181/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/EvtCtalogCacheReload/Flow/EvtCatalogCacheReload/Generate-Error-Fault-svcException.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://xmlns.example.com/1448438775181/CORE_AUDIT/ProcessUtilities/EvtCatalogCacheInit/EvtCtalogCacheReload/Flow/EvtCatalogCacheReload/Generate-Error-Fault-svcException.xsd">
+    <xs:element name="svcException" type="xs:anyType"/>
+</xs:schema>

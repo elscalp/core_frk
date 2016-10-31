@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sca:composite xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:BW="http://xsd.tns.tibco.com/amf/models/sca/implementationtype/BW" xmlns:XMLSchema="http://www.w3.org/2001/XMLSchema" xmlns:compositeext="http://schemas.tibco.com/amx/3.0/compositeext" xmlns:jdbc="http://xsd.tns.tibco.com/amf/models/sharedresource/jdbc" xmlns:jms="http://xsd.tns.tibco.com/bw/models/sharedresource/jms" xmlns:property="http://ns.tibco.com/bw/property" xmlns:sca="http://www.osoa.org/xmlns/sca/1.0" xmlns:scaext="http://xsd.tns.tibco.com/amf/models/sca/extensions" xmi:id="_-D6ywJ--EeaYatYkonS-3w" targetNamespace="http://tns.tibco.com/bw/composite/core_audit.module" name="core_audit.module" compositeext:version="1.0.0" compositeext:formatVersion="2">
+  <sca:property xmi:id="_-D6ywZ--EeaYatYkonS-3w" name="Deployment" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6ywp--EeaYatYkonS-3w" name="DirTrace" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yw5--EeaYatYkonS-3w" name="Domain" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yxJ--EeaYatYkonS-3w" name="Environment" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yxZ--EeaYatYkonS-3w" name="HawkEnabled" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y-5--EeaYatYkonS-3w" name="BW.DEPLOYMENTUNIT.TYPE" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y_J--EeaYatYkonS-3w" name="BW.APPNODE.NAME" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y_Z--EeaYatYkonS-3w" name="BW.DEPLOYMENTUNIT.NAME" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y_p--EeaYatYkonS-3w" name="BW.HOST.NAME" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y_5--EeaYatYkonS-3w" name="BW.DOMAIN.NAME" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6zAJ--EeaYatYkonS-3w" name="BW.DEPLOYMENTUNIT.VERSION" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6zAZ--EeaYatYkonS-3w" name="BW.APPSPACE.NAME" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6zAp--EeaYatYkonS-3w" name="BW.MODULE.VERSION" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6zA5--EeaYatYkonS-3w" name="BW.MODULE.NAME" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-N0VoJ--EeaYatYkonS-3w" name="CORE_AUDITResourcesConnectionDBDB_CORE_AUDIT_MEMORY" type="jdbc:JdbcDataSource" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-Ox-8J--EeaYatYkonS-3w" name="CORE_AUDITResourcesConnectionDBDB_CORE_AUDIT_MEMORY-1" type="jdbc:JdbcDataSource" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-RbqUJ--EeaYatYkonS-3w" name="CORE_COMMONResourcesConnectionJMSJMS_LOG" type="jms:JMSConnectionFactory" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-pgMEJ--EeaYatYkonS-3w" name="CORE_AUDITResourcesConnectionDBDB_CORE_AUDIT" type="jdbc:JdbcDataSource" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-rlPsJ--EeaYatYkonS-3w" name="CORE_COMMONResourcesConnectionJMSJMS_MSG" type="jms:JMSConnectionFactory" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yxp--EeaYatYkonS-3w" name="CORE_AUDIT/FixedValues/GLB_BT_LOG" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yx5--EeaYatYkonS-3w" name="CORE_AUDIT/FixedValues/GLB_BT_MSG" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yyJ--EeaYatYkonS-3w" name="CORE_AUDIT/FixedValues/GLB_NO" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yyZ--EeaYatYkonS-3w" name="CORE_AUDIT/FixedValues/GLB_YES" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yyp--EeaYatYkonS-3w" name="CORE_AUDIT/JMSService/LogEvent/destination" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yy5--EeaYatYkonS-3w" name="CORE_AUDIT/JMSService/LogEvent/maxSession" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yzJ--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/JDBCURL" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yzZ--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/MaxConnections" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yzp--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/MaxRows" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6yz5--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/NewItem" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y0J--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/Password" type="property:password" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y0Z--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/Timeout" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y0p--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT/User" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y05--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/JDBCURL" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y1J--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/MaxConnections" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y1Z--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/MaxRows" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y1p--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/Password" type="property:password" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y15--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/Timeout" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y2J--EeaYatYkonS-3w" name="CORE_AUDIT/SharedConnections/JDBC/CORE_AUDIT_CACHE/User" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y2Z--EeaYatYkonS-3w" name="CORE_AUDIT/SourceControl/BuildLabel" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y2p--EeaYatYkonS-3w" name="CORE_AUDIT/SourceControl/BuildTimestamp" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y25--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/EvtCatalogRuleCache/CacheRefreshDelayMS" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y3J--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/EvtCatalogRuleCache/ExitOnRuleReloadError" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y3Z--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/LogEvent/." type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y3p--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/LogEvent/DBAccessRetry/." type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y35--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/LogEvent/DBAccessRetry/DelayBetweenRetryMS" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y4J--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/LogEvent/DBAccessRetry/MaxRetry" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y4Z--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/MonitoringLogicLookup/lookupRetryDelayMS" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y4p--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/MonitoringLogicLookup/lookupRetryNo" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y45--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/TraceTags/." type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y5J--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/TraceTags/EVTCATALOG_RULE_CACHE_INIT_FAILURE" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y5Z--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/TraceTags/ROUTING_DEBUG_RULES" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y5p--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/TraceTags/ROUTING_DONE" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y55--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/TraceTags/ROUTING_MSG_ID_DUP" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y6J--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/TraceTags/ROUTING_NO_TARGET" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y6Z--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/TraceTags/ROUTING_TARGET_DISABLED" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y6p--EeaYatYkonS-3w" name="CORE_AUDIT/SvcProp/TraceTags/ROUTING_TID_DUP" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y65--EeaYatYkonS-3w" name="CORE_AUDIT/Timers/Resubmission/ResubDelayMS" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y7J--EeaYatYkonS-3w" name="GLOBAL/Audit/Properties/DefaultMsgBodyLogPolicy" type="XMLSchema:int" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y7Z--EeaYatYkonS-3w" name="GLOBAL/Audit/Properties/RaiseExceptionOnAuditFailure" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y7p--EeaYatYkonS-3w" name="GLOBAL/Audit/Properties/TraceDir" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y75--EeaYatYkonS-3w" name="GLOBAL/Audit/Properties/TraceToFile" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y8J--EeaYatYkonS-3w" name="GLOBAL/Audit/Properties/TraceToJMS" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y8Z--EeaYatYkonS-3w" name="GLOBAL/Audit/Roles/DisableCustomSteps" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y8p--EeaYatYkonS-3w" name="GLOBAL/Audit/Roles/TraceDebug" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y85--EeaYatYkonS-3w" name="GLOBAL/Audit/Roles/TraceEntry" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y9J--EeaYatYkonS-3w" name="GLOBAL/Audit/Roles/TraceError" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y9Z--EeaYatYkonS-3w" name="GLOBAL/Audit/Roles/TraceExit" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y9p--EeaYatYkonS-3w" name="GLOBAL/Audit/Roles/TraceInfo" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y95--EeaYatYkonS-3w" name="GLOBAL/Audit/Roles/TraceWarning" type="XMLSchema:boolean" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y-J--EeaYatYkonS-3w" name="GLOBAL/Source/Area" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y-Z--EeaYatYkonS-3w" name="GLOBAL/Source/ComponentInstance" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:property xmi:id="_-D6y-p--EeaYatYkonS-3w" name="GLOBAL/Source/ComponentName" type="XMLSchema:string" publicAccess="true" scalable="true"/>
+  <sca:component xmi:id="_-i7qAJ--EeaYatYkonS-3w" name="CORE_AUDIT.Processes.LogAudit.LogAuditComponent" compositeext:version="1.0.0.qualifier">
+    <scaext:implementation xsi:type="BW:BWComponentImplementation" xmi:id="_-i7qAZ--EeaYatYkonS-3w" processName="CORE_AUDIT.Processes.LogAudit.LogAudit"/>
+  </sca:component>
+  <sca:component xmi:id="_-8SlMJ--EeaYatYkonS-3w" name="CORE_AUDIT.Processes.Resubmission.Resubmission_timerComponent" compositeext:version="1.0.0.qualifier">
+    <scaext:implementation xsi:type="BW:BWComponentImplementation" xmi:id="_-8SlMZ--EeaYatYkonS-3w" processName="CORE_AUDIT.Processes.Resubmission.Resubmission_timer"/>
+  </sca:component>
+  <sca:component xmi:id="__LHEUJ--EeaYatYkonS-3w" name="ActivatorComponent" compositeext:version="1.0.0.qualifier">
+    <scaext:implementation xsi:type="BW:BWComponentImplementation" xmi:id="__LHEUZ--EeaYatYkonS-3w" processName="Activator"/>
+  </sca:component>
+  <sca:component xmi:id="__arxYJ--EeaYatYkonS-3w" name="CORE_AUDIT.ProcessUtilities.EvtCatalogCacheInit.EvtCtalogCacheReload.EvtCatalogCacheReloadComponent" compositeext:version="1.0.0.qualifier">
+    <scaext:implementation xsi:type="BW:BWComponentImplementation" xmi:id="__arxYZ--EeaYatYkonS-3w" processName="CORE_AUDIT.ProcessUtilities.EvtCatalogCacheInit.EvtCtalogCacheReload.EvtCatalogCacheReload"/>
+  </sca:component>
+</sca:composite>

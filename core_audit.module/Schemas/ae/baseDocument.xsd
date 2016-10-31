@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ae="http://www.tibco.com/xmlns/ae2xsd/2002/05" xmlns:base="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/baseDocument" targetNamespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/baseDocument" elementFormDefault="qualified" attributeFormDefault="qualified">
+    <import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05" schemaLocation="../ae2xsd.xsd"/>
+    <complexType ae:typename="/tibco/public/class/ae/baseDocument/MAdvisoryDocument" ae:directory="/AESchemas/ae/baseDocument.aeschema#class.MAdvisoryDocument" ae:type="class" name="MAdvisoryDocument">
+        <complexContent>
+            <extension base="base:baseAdvisoryDocument">
+                <sequence>
+                    <element ae:readable="true" ae:writeable="true" name="Data" form="unqualified" nillable="true" type="anyType" minOccurs="0" maxOccurs="unbounded"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType ae:typename="/tibco/public/class/ae/baseDocument/MBusinessDocument" ae:directory="/AESchemas/ae/baseDocument.aeschema#class.MBusinessDocument" ae:type="class" name="MBusinessDocument">
+        <complexContent>
+            <extension base="base:baseBusinessDocument">
+                <sequence>
+                    <element ae:readable="true" ae:writeable="true" name="DataSection" form="unqualified" nillable="true" type="base:sequence_lsqb_MDataSection_rsqb_" minOccurs="0"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType ae:typename="/tibco/public/class/ae/baseDocument/MDataSection" ae:directory="/AESchemas/ae/baseDocument.aeschema#class.MDataSection" ae:type="class" name="MDataSection">
+        <sequence>
+            <element ae:readable="true" ae:writeable="true" name="VerbCode" form="unqualified" nillable="true" type="ae:i4" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="Data" form="unqualified" nillable="true" type="anyType" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <complexType ae:typename="/tibco/public/class/ae/baseDocument/aeAdvisoryDocument" ae:directory="/AESchemas/ae/baseDocument.aeschema#class.aeAdvisoryDocument" ae:type="class" name="aeAdvisoryDocument">
+        <complexContent>
+            <extension base="base:baseAdvisoryDocument">
+                <sequence>
+                    <element ae:readable="true" ae:writeable="true" name="Data" form="unqualified" nillable="true" type="anyType" minOccurs="0" maxOccurs="unbounded"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType ae:typename="/tibco/public/class/ae/baseDocument/baseAdvisoryDocument" ae:directory="/AESchemas/ae/baseDocument.aeschema#class.baseAdvisoryDocument" ae:type="class" name="baseAdvisoryDocument">
+        <sequence>
+            <element ae:readable="true" ae:writeable="true" name="ApplicationInstanceId" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ReferenceId" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="Description" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="Class" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="Severity" form="unqualified" nillable="true" type="ae:i4" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="DateTimeStamp" form="unqualified" nillable="true" type="ae:dateTime" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="Subject" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="Name" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ApplicationContext" form="unqualified" nillable="true" type="anyType" minOccurs="0" maxOccurs="unbounded"/>
+            <element ae:readable="true" ae:writeable="true" name="Version" form="unqualified" nillable="true" type="ae:i4" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="Analysis" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ApplicationId" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+        </sequence>
+    </complexType>
+    <complexType ae:typename="/tibco/public/class/ae/baseDocument/baseBusinessDocument" ae:directory="/AESchemas/ae/baseDocument.aeschema#class.baseBusinessDocument" ae:type="class" name="baseBusinessDocument">
+        <sequence>
+            <element ae:readable="true" ae:writeable="true" name="VerbCode" form="unqualified" nillable="true" type="ae:i4" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ApplicationInstanceId" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ReferenceId" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="Encrypted" form="unqualified" nillable="true" type="ae:boolean" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="DateTimeStamp" form="unqualified" nillable="true" type="ae:dateTime" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ReplyAddress" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="LotEnd" form="unqualified" nillable="true" type="ae:boolean" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="LotId" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ConfirmCode" form="unqualified" nillable="true" type="ae:i4" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ComponentId" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="Name" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ApplicationContext" form="unqualified" nillable="true" type="anyType" minOccurs="0" maxOccurs="unbounded"/>
+            <element ae:readable="true" ae:writeable="true" name="Version" form="unqualified" nillable="true" type="ae:i4" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="LotItem" form="unqualified" nillable="true" type="ae:i4" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ErrorAddress" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+            <element ae:readable="true" ae:writeable="true" name="ApplicationId" form="unqualified" nillable="true" type="ae:string" minOccurs="0"/>
+        </sequence>
+    </complexType>
+    <complexType ae:typename="/tibco/public/sequence/ae/class/ae/baseDocument/sequence[MDataSection]" ae:directory="/AESchemas/ae/baseDocument.aeschema#sequence.sequence[MDataSection]" ae:type="sequence" ae:isSequence="true" name="sequence_lsqb_MDataSection_rsqb_">
+        <sequence>
+            <element name="item" form="unqualified" type="base:MDataSection" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <element name="MAdvisoryDocument" type="base:MAdvisoryDocument"/>
+    <element name="MBusinessDocument" type="base:MBusinessDocument"/>
+    <element name="MDataSection" type="base:MDataSection"/>
+    <element name="aeAdvisoryDocument" type="base:aeAdvisoryDocument"/>
+    <element name="baseAdvisoryDocument" type="base:baseAdvisoryDocument"/>
+    <element name="baseBusinessDocument" type="base:baseBusinessDocument"/>
+    <element name="sequence_lsqb_MDataSection_rsqb_" type="base:sequence_lsqb_MDataSection_rsqb_"/>
+</schema>

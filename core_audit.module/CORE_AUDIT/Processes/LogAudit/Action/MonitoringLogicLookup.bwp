@@ -1,0 +1,2057 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpws:process exitOnStandardFault="no"
+    name="CORE_AUDIT.Processes.LogAudit.Action.MonitoringLogicLookup"
+    suppressJoinFailure="yes"
+    targetNamespace="http://xmlns.example.com/1448880419367"
+    xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:info="http://www.tibco.com/bw/process/info"
+    xmlns:ns="http://www.tibco.com/pe/EngineTypes"
+    xmlns:ns0="/CORE_AUDIT/Processes/LogAudit/Action/MonitoringLogicLookup-Start-Input.xsd"
+    xmlns:ns1="http://tns.tibco.com/bw/activity/sleep/xsd"
+    xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/jdbc+4f02eeac-6a33-489a-9784-959c9b62af42+input"
+    xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/jdbc+4f02eeac-6a33-489a-9784-959c9b62af42+output"
+    xmlns:ns4="http://www.tibco.com/namespaces/tnt/plugins/jdbc+0f44a86f-b3e5-4261-9250-512fad1ddca0+input"
+    xmlns:ns5="http://www.tibco.com/namespaces/tnt/plugins/jdbc+0f44a86f-b3e5-4261-9250-512fad1ddca0+output"
+    xmlns:ns6="http://www.tibco.com/ESB/framework/Audit/monitoring_logic_event_v1"
+    xmlns:ns7="http://www.tibco.com/namespaces/tnt/plugins/jms+bee8ecab-ddad-46f6-8412-5e0683ba1808+input"
+    xmlns:ns8="http://www.tibco.com/namespaces/tnt/plugins/jms"
+    xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
+    xmlns:sca-bpel="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"
+    xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"
+    xmlns:tibprop="http://ns.tibco.com/bw/property" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <tibex:Types>
+        <xs:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.tibco.com/pe/EngineTypes"
+            xmlns:tns="http://www.tibco.com/pe/EngineTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="ErrorReport">
+                <xs:sequence>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="StackTrace" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Msg" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="FullClass" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Class" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ProcessStack" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0" name="MsgCode" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0" name="Data" type="tns:anydata"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="FaultDetail">
+                <xs:sequence>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ActivityName" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0" name="Data" type="tns:anydata"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Msg" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="MsgCode" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ProcessStack" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="StackTrace" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="FullClass" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="Class" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="ProcessContext">
+                <xs:sequence>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="JobId" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ApplicationName" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="EngineName" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" name="ProcessInstanceId" type="xs:string"/>
+                    <xs:element
+                        block="extension restriction substitution"
+                        form="unqualified" minOccurs="0"
+                        name="CustomJobId" type="xs:string"/>
+                    <!--xs:element name="RestartedFromCheckpoint" form="unqualified" block="extension restriction substitution" type="xs:boolean"/-->
+                    <!--xs:element minOccurs="0" maxOccurs="unbounded" name="TrackingInfo" form="unqualified" block="extension restriction substitution" type="xs:string"/-->
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType block="extension restriction"
+                final="extension restriction" name="anydata">
+                <xs:sequence>
+                    <xs:any namespace="##any" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="ErrorReport" type="tns:ErrorReport"/>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="FaultDetail" type="tns:FaultDetail"/>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="ProcessContext" type="tns:ProcessContext"/>
+            <xs:element block="extension restriction substitution"
+                final="extension restriction" name="CorrelationValue" type="xs:string"/>
+        </xs:schema>
+        <schema attributeFormDefault="unqualified"
+            elementFormDefault="unqualified"
+            targetNamespace="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions"
+            version="" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions">
+            <complexType name="ActivityExceptionType">
+                <sequence>
+                    <element name="msg" type="string"/>
+                    <element minOccurs="0" name="msgCode" type="string"/>
+                </sequence>
+            </complexType>
+            <element name="ActivityException" type="tns:ActivityExceptionType"/>
+            <complexType name="ActivityTimedOutExceptionType">
+                <complexContent>
+                    <extension base="tns:ActivityExceptionType"/>
+                </complexContent>
+            </complexType>
+            <element name="ActivityTimedOutException" type="tns:ActivityTimedOutExceptionType"/>
+        </schema>
+        <xs:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://tns.tibco.com/bw/activity/sleep/xsd"
+            xmlns:tns="http://tns.tibco.com/bw/activity/sleep/xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+            <xs:complexType name="SleepInputSchema">
+                <xs:sequence>
+                    <xs:element form="unqualified"
+                        name="IntervalInMillisec" type="xs:integer"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="SleepInputSchema" type="tns:SleepInputSchema"/>
+        </xs:schema>
+        <schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/jdbc+4f02eeac-6a33-489a-9784-959c9b62af42+input"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/jdbc+4f02eeac-6a33-489a-9784-959c9b62af42+input">
+            <element name="jdbcQueryActivityInput">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="COMPAREA" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="COMPNAME" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="COMPINST" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="FLOWNAME" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="SERVICENAME" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="OPERATION" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="LOGROLE" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="LOGCODE" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="CUSTOMLOGSTEP" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="ServerTimeZone" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="timeout" type="long"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="maxRows" type="long"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+        <schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/jdbc+4f02eeac-6a33-489a-9784-959c9b62af42+output"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/jdbc+4f02eeac-6a33-489a-9784-959c9b62af42+output">
+            <element name="resultSet">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="Record">
+                            <complexType>
+                                <sequence>
+                                    <element maxOccurs="1" minOccurs="1"
+                                    name="RULEID" type="string"/>
+                                    <element maxOccurs="1" minOccurs="0"
+                                    name="RULELABEL"
+                                    nillable="false" type="string"/>
+                                    <element maxOccurs="1" minOccurs="0"
+                                    name="SOLUTIONHINT"
+                                    nillable="false" type="string"/>
+                                    <element maxOccurs="1" minOccurs="0"
+                                    name="DOCLINK" nillable="false" type="string"/>
+                                    <element maxOccurs="1" minOccurs="1"
+                                    name="DESTINATION" type="string"/>
+                                </sequence>
+                            </complexType>
+                        </element>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+        <schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/jdbc+0f44a86f-b3e5-4261-9250-512fad1ddca0+input"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/jdbc+0f44a86f-b3e5-4261-9250-512fad1ddca0+input">
+            <element name="jdbcQueryActivityInput">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="1" minOccurs="1"
+                            name="RuleIdSet" nillable="true" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="ServerTimeZone" type="string"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="timeout" type="long"/>
+                        <element maxOccurs="1" minOccurs="0"
+                            name="maxRows" type="long"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+        <schema
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/jdbc+0f44a86f-b3e5-4261-9250-512fad1ddca0+output"
+            xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tibco.com/namespaces/tnt/plugins/jdbc+0f44a86f-b3e5-4261-9250-512fad1ddca0+output">
+            <element name="resultSet">
+                <complexType>
+                    <sequence>
+                        <element maxOccurs="unbounded" minOccurs="0" name="Record">
+                            <complexType>
+                                <sequence>
+                                    <element maxOccurs="1" minOccurs="1"
+                                    name="RULEID" type="string"/>
+                                    <element maxOccurs="1" minOccurs="1"
+                                    name="PROPNAME" type="string"/>
+                                    <element maxOccurs="1" minOccurs="1"
+                                    name="PROPVALUE" type="string"/>
+                                </sequence>
+                            </complexType>
+                        </element>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+        <xsd:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/jms+bee8ecab-ddad-46f6-8412-5e0683ba1808+input"
+            version="0.1"
+            xmlns="http://www.tibco.com/namespaces/tnt/plugins/jms+bee8ecab-ddad-46f6-8412-5e0683ba1808+input"
+            xmlns:Q1="http://www.tibco.com/ESB/framework/messaging/xml_msg_v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="ActivityOutput">
+                <xsd:sequence>
+                    <xsd:element name="MessageID" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <!-- awagle addition -->
+            <xsd:complexType name="JMSTransmitInputSchemaType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="destination" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="replyTo" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSExpiration" type="xsd:int"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSPriority" type="xsd:int"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSDeliveryMode" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSCorrelationID" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSType" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSProperties" type="JmsTransmitProperties"/>
+                    <xsd:element form="unqualified" minOccurs="1" name="Body">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element ref="Q1:xmlMsg"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="DynamicProperties" type="JmsDynamicProperties"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsTransmitProperties">
+                <xsd:sequence>
+                    <!-- these two are actually useful and used (but group seq can't be set) -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXGroupID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXGroupSeq" type="xsd:int"/>
+                    <!-- tibco specific
+      <xsd:element name="JMS_TIBCO_MSG_EXT" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="JMS_TIBCO_COMPRESS" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+      <! these two are TNT-specific, supporting the XML decoding
+      <xsd:element name="TIBCO_TNT_schema_reference" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="TIBCO_TNT_root_element" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      -->
+                    <!-- all other properties, vendor or application defined, in a standard format -->
+                    <!-- <xsd:element name="JMS_VendorDefined" type="typed-name-value-pair" minOccurs="0" maxOccurs="unbounded" />  -->
+                    <!-- <xsd:element name="JMS_ApplicationDefined" type="typed-name-value-pair" minOccurs="0" maxOccurs="unbounded" />  -->
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsHeaders">
+                <xsd:sequence>
+                    <!-- NOTE: a destination is actually an object.  We are able to treat is as a string
+           because the other items that define a destination (topic vs queue, server/connection)
+           are already defined in the config element.  We do the same for the ReplyTo -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSDestination" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSReplyTo" type="xsd:string"/>
+                    <!-- PROBLEM: this is actually an int, but we're representing it here as a string enumeration,
+  meaning that the app must then translate from the constants in JMS to the 'constants' in the enumeration -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSDeliveryMode" type="JmsDeliveryMode"/>
+                    <!-- actually an int ... -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSMessageID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSTimestamp" type="xsd:long"/>
+                    <!-- Java timestamp, millis from era -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSExpiration" type="xsd:long"/>
+                    <!-- Java timestamp, millis from era -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSRedelivered" type="xsd:boolean"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSPriority" type="JmsPriority"/>
+                    <!-- PROBLEM: correlation id can also be retrieved as a stream of bytes -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSCorrelationID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSType" type="xsd:string"/>
+                    <!-- <xsd:element name="EventSource" type="xsd:string" minOccurs="0" maxOccurs="1" /> -->
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsProperties">
+                <xsd:sequence>
+                    <!-- most of these are not really accessible, easily, but appear on incoming messages -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXUserID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXAppID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXProducerTXID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXConsumerTXID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXRcvTimestamp" type="xsd:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXDeliveryCount" type="xsd:int"/>
+                    <!-- these two are actually useful and used (but group seq can't be set) -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXGroupID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXGroupSeq" type="xsd:int"/>
+                    <!-- tibco specific -->
+                    <!--<xsd:element name="JMS_TIBCO_MSG_EXT" type="xsd:boolean" minOccurs="0" maxOccurs="1" /> -->
+                    <!--<xsd:element name="JMS_TIBCO_COMPRESS" type="xsd:boolean" minOccurs="0" maxOccurs="1" /> -->
+                    <!-- these two are TNT-specific, supporting the XML decoding -->
+                    <!--<xsd:element name="TIBCO_TNT_schema_reference" type="xsd:string" minOccurs="0" maxOccurs="1" /> -->
+                    <!--<xsd:element name="TIBCO_TNT_root_element" type="xsd:string" minOccurs="0" maxOccurs="1" /> -->
+                    <!-- all other properties, vendor or application defined, in a standard format -->
+                    <!-- <xsd:element name="JMS_VendorDefined" type="typed-name-value-pair" minOccurs="0" maxOccurs="unbounded" />  -->
+                    <!-- <xsd:element name="JMS_ApplicationDefined" type="typed-name-value-pair" minOccurs="0" maxOccurs="unbounded" />  -->
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsDynamicProperties">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0"
+                        name="property" type="JmsDynamicProperty"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsDynamicProperty">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="name"
+                        nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="value" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="type"
+                        nillable="true" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsMessage">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="MessageHeaders" type="JmsHeaders"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageProperties" type="JmsProperties"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JMSReceiveSchema">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" name="JMSHeaders" type="JmsHeaders"/>
+                    <xsd:element form="unqualified" name="JMSProperties" type="JmsProperties"/>
+                    <!-- <xsd:element name="OtherProperties" form="unqualified" type="tns:OtherProperties" minOccurs="0"/>-->
+                    <xsd:element form="unqualified" name="Body" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="DynamicProperties" type="JmsDynamicProperties"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ActivityOutput" type="JMSReceiveSchema"/>
+            <!-- enumerations for various constants -->
+            <xsd:simpleType name="JmsDeliveryMode">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="PERSISTENT"/>
+                    <xsd:enumeration value="NON_PERSISTENT"/>
+                    <xsd:enumeration value="RELIABLE_DELIVERY"/>
+                    <!-- Tibco Enterprise for JMS defined (TibjmsxConst) -->
+                    <!-- <xsd:enumeration value="NO_ACKNOWLEDGE" /> -->
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="JmsPriority">
+                <xsd:restriction base="xsd:int">
+                    <xsd:minInclusive value="0"/>
+                    <xsd:maxInclusive value="9"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="aEmptyOutputClass" type="ActivityOutput"/>
+            <xsd:element name="ActivityInput" type="JMSTransmitInputSchemaType"/>
+            <xsd:complexType name="JMSQueueGetMessageInputSchema">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="destinationQueue" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="timeout" type="xsd:long"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="selector" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="GetJMSActivityInput" type="JMSQueueGetMessageInputSchema"/>
+        </xsd:schema>
+        <xsd:schema attributeFormDefault="unqualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://www.tibco.com/namespaces/tnt/plugins/jms"
+            version="0.1"
+            xmlns="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="ActivityOutput">
+                <xsd:sequence>
+                    <xsd:element name="MessageID" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <!-- awagle addition -->
+            <xsd:complexType name="JMSTransmitInputSchemaType">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="destination" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="replyTo" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSExpiration" type="xsd:int"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSPriority" type="xsd:int"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSDeliveryMode" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSCorrelationID" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSType" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="JMSProperties" type="JmsTransmitProperties"/>
+                    <xsd:element form="unqualified" minOccurs="1"
+                        name="Body" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="DynamicProperties" type="JmsDynamicProperties"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsTransmitProperties">
+                <xsd:sequence>
+                    <!-- these two are actually useful and used (but group seq can't be set) -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXGroupID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXGroupSeq" type="xsd:int"/>
+                    <!-- tibco specific
+      <xsd:element name="JMS_TIBCO_MSG_EXT" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="JMS_TIBCO_COMPRESS" type="xsd:boolean" minOccurs="0" maxOccurs="1" />
+      <! these two are TNT-specific, supporting the XML decoding
+      <xsd:element name="TIBCO_TNT_schema_reference" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      <xsd:element name="TIBCO_TNT_root_element" type="xsd:string" minOccurs="0" maxOccurs="1" />
+      -->
+                    <!-- all other properties, vendor or application defined, in a standard format -->
+                    <!-- <xsd:element name="JMS_VendorDefined" type="typed-name-value-pair" minOccurs="0" maxOccurs="unbounded" />  -->
+                    <!-- <xsd:element name="JMS_ApplicationDefined" type="typed-name-value-pair" minOccurs="0" maxOccurs="unbounded" />  -->
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsHeaders">
+                <xsd:sequence>
+                    <!-- NOTE: a destination is actually an object.  We are able to treat is as a string
+           because the other items that define a destination (topic vs queue, server/connection)
+           are already defined in the config element.  We do the same for the ReplyTo -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSDestination" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSReplyTo" type="xsd:string"/>
+                    <!-- PROBLEM: this is actually an int, but we're representing it here as a string enumeration,
+  meaning that the app must then translate from the constants in JMS to the 'constants' in the enumeration -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSDeliveryMode" type="JmsDeliveryMode"/>
+                    <!-- actually an int ... -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSMessageID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSTimestamp" type="xsd:long"/>
+                    <!-- Java timestamp, millis from era -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSExpiration" type="xsd:long"/>
+                    <!-- Java timestamp, millis from era -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSRedelivered" type="xsd:boolean"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSPriority" type="JmsPriority"/>
+                    <!-- PROBLEM: correlation id can also be retrieved as a stream of bytes -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSCorrelationID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSType" type="xsd:string"/>
+                    <!-- <xsd:element name="EventSource" type="xsd:string" minOccurs="0" maxOccurs="1" /> -->
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsProperties">
+                <xsd:sequence>
+                    <!-- most of these are not really accessible, easily, but appear on incoming messages -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXUserID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXAppID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXProducerTXID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXConsumerTXID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXRcvTimestamp" type="xsd:long"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXDeliveryCount" type="xsd:int"/>
+                    <!-- these two are actually useful and used (but group seq can't be set) -->
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXGroupID" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="JMSXGroupSeq" type="xsd:int"/>
+                    <!-- tibco specific -->
+                    <!--<xsd:element name="JMS_TIBCO_MSG_EXT" type="xsd:boolean" minOccurs="0" maxOccurs="1" /> -->
+                    <!--<xsd:element name="JMS_TIBCO_COMPRESS" type="xsd:boolean" minOccurs="0" maxOccurs="1" /> -->
+                    <!-- these two are TNT-specific, supporting the XML decoding -->
+                    <!--<xsd:element name="TIBCO_TNT_schema_reference" type="xsd:string" minOccurs="0" maxOccurs="1" /> -->
+                    <!--<xsd:element name="TIBCO_TNT_root_element" type="xsd:string" minOccurs="0" maxOccurs="1" /> -->
+                    <!-- all other properties, vendor or application defined, in a standard format -->
+                    <!-- <xsd:element name="JMS_VendorDefined" type="typed-name-value-pair" minOccurs="0" maxOccurs="unbounded" />  -->
+                    <!-- <xsd:element name="JMS_ApplicationDefined" type="typed-name-value-pair" minOccurs="0" maxOccurs="unbounded" />  -->
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsDynamicProperties">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="unbounded" minOccurs="0"
+                        name="property" type="JmsDynamicProperty"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsDynamicProperty">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1" name="name"
+                        nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="value" nillable="true" type="xsd:string"/>
+                    <xsd:element maxOccurs="1" minOccurs="0" name="type"
+                        nillable="true" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JmsMessage">
+                <xsd:sequence>
+                    <xsd:element maxOccurs="1" minOccurs="1"
+                        name="MessageHeaders" type="JmsHeaders"/>
+                    <xsd:element maxOccurs="1" minOccurs="0"
+                        name="MessageProperties" type="JmsProperties"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="JMSReceiveSchema">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" name="JMSHeaders" type="JmsHeaders"/>
+                    <xsd:element form="unqualified" name="JMSProperties" type="JmsProperties"/>
+                    <!-- <xsd:element name="OtherProperties" form="unqualified" type="tns:OtherProperties" minOccurs="0"/>-->
+                    <xsd:element form="unqualified" name="Body" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="DynamicProperties" type="JmsDynamicProperties"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ActivityOutput" type="JMSReceiveSchema"/>
+            <!-- enumerations for various constants -->
+            <xsd:simpleType name="JmsDeliveryMode">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="PERSISTENT"/>
+                    <xsd:enumeration value="NON_PERSISTENT"/>
+                    <xsd:enumeration value="RELIABLE_DELIVERY"/>
+                    <!-- Tibco Enterprise for JMS defined (TibjmsxConst) -->
+                    <!-- <xsd:enumeration value="NO_ACKNOWLEDGE" /> -->
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="JmsPriority">
+                <xsd:restriction base="xsd:int">
+                    <xsd:minInclusive value="0"/>
+                    <xsd:maxInclusive value="9"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="aEmptyOutputClass" type="ActivityOutput"/>
+            <xsd:element name="ActivityInput" type="JMSTransmitInputSchemaType"/>
+            <xsd:complexType name="JMSQueueGetMessageInputSchema">
+                <xsd:sequence>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="destinationQueue" type="xsd:string"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="timeout" type="xsd:long"/>
+                    <xsd:element form="unqualified" minOccurs="0"
+                        name="selector" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="GetJMSActivityInput" type="JMSQueueGetMessageInputSchema"/>
+        </xsd:schema>
+    </tibex:Types>
+    <tibex:ProcessInfo callable="true" createdBy="elghazali"
+        createdOn="Tue Nov 01 00:08:44 CET 2016" description=""
+        modifiers="public" productVersion="6.3.4 V15 2016-10-12"
+        scalable="false" singleton="true" stateless="false" type="IT"/>
+    <tibex:ProcessInterface context=""
+        input="{/CORE_AUDIT/Processes/LogAudit/Action/MonitoringLogicLookup-Start-Input.xsd}input" output=""/>
+    <tibex:ProcessTemplateConfigurations/>
+    <notation:Diagram measurementUnit="Pixel" type="BWProcess"
+        xmlns:bwnotation="http://tns.tibco.com/bw/runtime/BWNotation"
+        xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <children type="2001">
+            <children type="5001"/>
+            <children type="3002">
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+            </children>
+            <children type="3003">
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+            </children>
+            <children type="3004">
+                <children type="4018">
+                    <children type="3018">
+                        <children type="4020">
+                            <children type="3020">
+                                <children type="4005">
+                                    <children type="3007">
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.0"/>
+                                    <layoutConstraint x="26"
+                                    xsi:type="notation:Bounds" y="254"/>
+                                    </children>
+                                    <children type="4018">
+                                    <children type="3018">
+                                    <children type="4019">
+                                    <children type="3019">
+                                    <children type="4025">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4025">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4025">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4025">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@variables"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@variables"/>
+                                    <layoutConstraint
+                                    height="20"
+                                    width="305"
+                                    x="30" xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4020">
+                                    <children type="3020">
+                                    <children type="4005">
+                                    <children type="3007">
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@activities.2"/>
+
+                                    <layoutConstraint
+                                    x="104"
+                                    xsi:type="notation:Bounds" y="162"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@activities.3"/>
+
+                                    <layoutConstraint
+                                    x="188"
+                                    xsi:type="notation:Bounds" y="69"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@activities.4"/>
+
+                                    <layoutConstraint
+                                    x="324"
+                                    xsi:type="notation:Bounds" y="155"/>
+                                    </children>
+                                    <styles xsi:type="notation:DrawerStyle"/>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity"/>
+
+                                    <layoutConstraint
+                                    height="108"
+                                    width="400"
+                                    x="2"
+                                    xsi:type="notation:Bounds" y="2"/>
+                                    </children>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint
+                                    height="44"
+                                    width="305"
+                                    x="30"
+                                    xsi:type="notation:Bounds" y="20"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@activities.0"/>
+                                    <layoutConstraint
+                                    xsi:type="notation:Bounds" y="69"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint
+                                    xsi:type="notation:Bounds" y="69"/>
+                                    </children>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint
+                                    height="317" width="617"
+                                    x="101"
+                                    xsi:type="notation:Bounds" y="153"/>
+                                    </children>
+                                    <children type="4018">
+                                    <children type="3018">
+                                    <children type="4020">
+                                    <children type="3020">
+                                    <children type="4005">
+                                    <children type="3007">
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activity/@activity/@activities.2"/>
+
+                                    <layoutConstraint
+                                    x="112"
+                                    xsi:type="notation:Bounds" y="84"/>
+                                    </children>
+
+                                    <children type="4002">
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <children type="4017">
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+
+                                    <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activity/@activity/@activities.3"/>
+
+                                    <layoutConstraint
+                                    x="248"
+                                    xsi:type="notation:Bounds" y="83"/>
+                                    </children>
+                                    <styles xsi:type="notation:DrawerStyle"/>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activity/@activity"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activity/@activity"/>
+
+                                    <layoutConstraint
+                                    height="108"
+                                    width="400"
+                                    x="2"
+                                    xsi:type="notation:Bounds" y="2"/>
+                                    </children>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2"/>
+                                    <layoutConstraint
+                                    height="44"
+                                    width="305"
+                                    x="30"
+                                    xsi:type="notation:Bounds" y="20"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activity/@activity/@activities.0"/>
+                                    <layoutConstraint
+                                    xsi:type="notation:Bounds" y="55"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activity/@activity/@activities.1"/>
+                                    <layoutConstraint
+                                    xsi:type="notation:Bounds" y="55"/>
+                                    </children>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.2"/>
+                                    <layoutConstraint
+                                    height="281" width="456"
+                                    x="686"
+                                    xsi:type="notation:Bounds" y="151"/>
+                                    </children>
+                                    <children type="4002">
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <children type="4017">
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <layoutConstraint xsi:type="notation:Bounds"/>
+                                    </children>
+                                    <styles
+                                    fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles
+                                    backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <element href="//0/@process/@activity/@activity/@activities.3"/>
+                                    <layoutConstraint x="626"
+                                    xsi:type="notation:Bounds" y="504"/>
+                                    </children>
+                                    <styles xsi:type="notation:DrawerStyle"/>
+                                    <styles xsi:type="notation:SortingStyle"/>
+                                    <styles xsi:type="notation:FilteringStyle"/>
+                                    <element href="//0/@process/@activity/@activity"/>
+                                    </children>
+                                    <styles fontName=".SF NS Text"
+                                    lineColor="0" xsi:type="notation:ShapeStyle"/>
+                                    <styles backgroundColor="16777215"
+                                    gradientEndColor="50431"
+                                    gradientStartColor="16777215" xsi:type="bwnotation:BackgroundStyle"/>
+                                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                                    <element href="//0/@process/@activity/@activity"/>
+                                    <layoutConstraint height="108"
+                                    width="400" x="2"
+                                    xsi:type="notation:Bounds" y="2"/>
+                                </children>
+                                <styles xsi:type="notation:SortingStyle"/>
+                                <styles xsi:type="notation:FilteringStyle"/>
+                            </children>
+                            <styles fontName=".SF NS Text" lineColor="0" xsi:type="notation:ShapeStyle"/>
+                            <styles xsi:type="bwnotation:BackgroundStyle"/>
+                            <styles xsi:type="bwnotation:ResizingStyle"/>
+                            <element href="//0/@process/@activity"/>
+                            <layoutConstraint height="365" width="444"
+                                x="30" xsi:type="notation:Bounds" y="20"/>
+                        </children>
+                        <styles xsi:type="notation:SortingStyle"/>
+                        <styles xsi:type="notation:FilteringStyle"/>
+                        <element href="//0/@process/@activity"/>
+                    </children>
+                    <styles fontName=".SF NS Text" lineColor="0" xsi:type="notation:ShapeStyle"/>
+                    <styles xsi:type="bwnotation:BackgroundStyle"/>
+                    <styles xsi:type="bwnotation:ResizingStyle"/>
+                    <element href="//0/@process/@activity"/>
+                    <layoutConstraint height="409" width="519" xsi:type="notation:Bounds"/>
+                </children>
+                <styles xsi:type="notation:SortingStyle"/>
+                <styles xsi:type="notation:FilteringStyle"/>
+                <element href="//0/@process"/>
+            </children>
+            <styles fontName=".SF NS Text" lineColor="0" xsi:type="notation:ShapeStyle"/>
+            <element href="//0/@process"/>
+            <layoutConstraint height="1008" width="2056" xsi:type="notation:Bounds"/>
+        </children>
+        <styles xsi:type="notation:DiagramStyle"/>
+        <element href="//0"/>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.1/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@links/@children.4"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.1/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.1/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@links/@children.5"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.2"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.1/@children.0/@children.0/@children.0/@children.0" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.2"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.1/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.1/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.1/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.1/@activity/@activity/@activity/@links/@children.3"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.1"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@activities.2/@activity/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.0"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.1"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.1"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.2"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+        <edges
+            source="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.2"
+            target="//@children.0/@children.3/@children.0/@children.0/@children.0/@children.0/@children.0/@children.0/@children.3" type="4006">
+            <children type="6002">
+                <layoutConstraint xsi:type="notation:Location" y="40"/>
+            </children>
+            <styles lineColor="0" xsi:type="notation:ConnectorStyle"/>
+            <styles fontName=".SF NS Text" xsi:type="notation:FontStyle"/>
+            <element href="//0/@process/@activity/@activity/@links/@children.3"/>
+            <bendpoints points="[0, 0, 0, 0]$[0, 0, 0, 0]" xsi:type="notation:RelativeBendpoints"/>
+        </edges>
+    </notation:Diagram>
+    <bpws:documentation/>
+    <bpws:import importType="http://www.w3.org/2001/XMLSchema" namespace="/CORE_AUDIT/Processes/LogAudit/Action/MonitoringLogicLookup-Start-Input.xsd"/>
+    <bpws:variables>
+        <bpws:variable element="ns:ProcessContext"
+            name="_processContext" sca-bpel:internal="true"/>
+        <bpws:variable
+            name="CORE_AUDIT-SvcProp-MonitoringLogicLookup-lookupRetryDelayMS"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="CORE_AUDIT/SvcProp/MonitoringLogicLookup/lookupRetryDelayMS" type="xsd:int"/>
+        <bpws:variable
+            name="CORE_AUDIT-SvcProp-MonitoringLogicLookup-lookupRetryNo"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="CORE_AUDIT/SvcProp/MonitoringLogicLookup/lookupRetryNo" type="xsd:int"/>
+        <bpws:variable name="BW.DEPLOYMENTUNIT.TYPE"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="BW.DEPLOYMENTUNIT.TYPE" type="xsd:string"/>
+        <bpws:variable name="BW.APPNODE.NAME" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="BW.APPNODE.NAME" type="xsd:string"/>
+        <bpws:variable name="BW.DEPLOYMENTUNIT.NAME"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="BW.DEPLOYMENTUNIT.NAME" type="xsd:string"/>
+        <bpws:variable name="BW.HOST.NAME" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="BW.HOST.NAME" type="xsd:string"/>
+        <bpws:variable name="BW.DOMAIN.NAME" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="BW.DOMAIN.NAME" type="xsd:string"/>
+        <bpws:variable name="BW.DEPLOYMENTUNIT.VERSION"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="BW.DEPLOYMENTUNIT.VERSION" type="xsd:string"/>
+        <bpws:variable name="BW.APPSPACE.NAME"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="BW.APPSPACE.NAME" type="xsd:string"/>
+        <bpws:variable name="BW.MODULE.VERSION"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            tibex:propertySource="BW.MODULE.VERSION" type="xsd:string"/>
+        <bpws:variable name="BW.MODULE.NAME" sca-bpel:hotUpdate="false"
+            sca-bpel:privateProperty="true" sca-bpel:property="yes"
+            tibex:propertySource="BW.MODULE.NAME" type="xsd:string"/>
+        <bpws:variable element="ns0:input" name="Start"
+            sca-bpel:internal="true" tibex:parameter="in"/>
+        <bpws:variable element="ns1:SleepInputSchema" name="Sleep-input" sca-bpel:internal="true"/>
+        <bpws:variable
+            name="CORE_AUDITResourcesConnectionDBDB_CORE_AUDIT_MEMORY"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/amf/models/sharedresource/jdbc}JdbcDataSource"
+            tibex:propertySource="CORE_AUDITResourcesConnectionDBDB_CORE_AUDIT_MEMORY" type="xsd:string"/>
+        <bpws:variable element="ns2:jdbcQueryActivityInput"
+            name="SelectRules-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns3:resultSet" name="SelectRules" sca-bpel:internal="true"/>
+        <bpws:variable
+            name="CORE_AUDITResourcesConnectionDBDB_CORE_AUDIT_MEMORY-1"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/amf/models/sharedresource/jdbc}JdbcDataSource"
+            tibex:propertySource="CORE_AUDITResourcesConnectionDBDB_CORE_AUDIT_MEMORY-1" type="xsd:string"/>
+        <bpws:variable element="ns4:jdbcQueryActivityInput"
+            name="Select-Prop-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns5:resultSet" name="Select-Prop" sca-bpel:internal="true"/>
+        <bpws:variable element="DESTINATION)]" name="currRule" sca-bpel:internal="true"/>
+        <bpws:variable element="ns6:monitoringLogicEvent"
+            name="Map-MonitLogicEvent-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns6:monitoringLogicEvent"
+            name="Map-MonitLogicEvent" sca-bpel:internal="true"/>
+        <bpws:variable name="CORE_COMMONResourcesConnectionJMSJMS_LOG"
+            sca-bpel:hotUpdate="false" sca-bpel:privateProperty="true"
+            sca-bpel:property="yes"
+            sca-bpel:sharedResourceType="{http://xsd.tns.tibco.com/bw/models/sharedresource/jms}JMSConnectionFactory"
+            tibex:propertySource="CORE_COMMONResourcesConnectionJMSJMS_LOG" type="xsd:string"/>
+        <bpws:variable element="ns7:ActivityInput"
+            name="JMS-Queue-Sender-input" sca-bpel:internal="true"/>
+        <bpws:variable element="ns8:aEmptyOutputClass"
+            name="JMS-Queue-Sender" sca-bpel:internal="true"/>
+    </bpws:variables>
+    <bpws:extensions>
+        <bpws:extension mustUnderstand="no" namespace="http://www.eclipse.org/gmf/runtime/1.0.2/notation"/>
+        <bpws:extension mustUnderstand="no" namespace="http://www.tibco.com/bw/process/info"/>
+        <bpws:extension mustUnderstand="no" namespace="http://docs.oasis-open.org/ns/opencsa/sca-bpel/200801"/>
+        <bpws:extension mustUnderstand="no" namespace="http://docs.oasis-open.org/ns/opencsa/sca/200912"/>
+        <bpws:extension mustUnderstand="no" namespace="http://ns.tibco.com/bw/property"/>
+        <bpws:extension mustUnderstand="no" namespace="http://www.tibco.com/bpel/2007/extensions"/>
+    </bpws:extensions>
+    <bpws:scope name="MonitoringLogicLookup">
+        <bpws:flow name="MonitoringLogicLookup">
+            <bpws:links>
+                <bpws:link name="Start-to-GroupSelect"/>
+                <bpws:link name="GroupSelect-to-End"
+                    tibex:label="no rule" tibex:linkType="SUCCESSWITHCONDITION"/>
+                <bpws:link
+                    name="GroupSelect-to-For-Each-Unique-Destination"
+                    tibex:label="Otherwise" tibex:linkType="SUCCESSWITHNOCONDITION"/>
+                <bpws:link name="For-Each-Unique-Destination-to-End"/>
+            </bpws:links>
+            <bpws:extensionActivity>
+                <tibex:receiveEvent createInstance="yes"
+                    eventTimeout="0" name="Start"
+                    tibex:xpdlId="355eeca1-3277-486f-b1a6-56fc98b08d63"
+                    variable="Start" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:sources>
+                        <bpws:source linkName="Start-to-GroupSelect"/>
+                    </bpws:sources>
+                    <tibex:eventSource>
+                        <tibex:StartEvent xmlns:tibex="http://www.tibco.com/bpel/2007/extensions"/>
+                    </tibex:eventSource>
+                </tibex:receiveEvent>
+            </bpws:extensionActivity>
+            <bpws:scope name="GroupSelect" tibex:group="repeatOnError"
+                tibex:indexOriginalName="k" tibex:indexToGlobal="false" tibex:xpdlId="00a0491e-9c1d-4e8f-af35-cc91be4b6ad1">
+                <bpws:targets>
+                    <bpws:target linkName="Start-to-GroupSelect"/>
+                </bpws:targets>
+                <bpws:sources>
+                    <bpws:source linkName="GroupSelect-to-End">
+                        <tibex:DesignExpression>
+                            <tibex:expression
+                                expression="count($SelectRules/Record) = 0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                        </tibex:DesignExpression>
+                        <bpws:transitionCondition><![CDATA[count($SelectRules/Record) = 0]]></bpws:transitionCondition>
+                    </bpws:source>
+                    <bpws:source linkName="GroupSelect-to-For-Each-Unique-Destination">
+                        <bpws:transitionCondition><![CDATA[##otherwise##]]></bpws:transitionCondition>
+                    </bpws:source>
+                </bpws:sources>
+                <bpws:variables>
+                    <bpws:variable name="k" sca-bpel:internal="true" type="xsd:int">
+                        <bpws:from>
+                            <bpws:literal>1</bpws:literal>
+                        </bpws:from>
+                    </bpws:variable>
+                    <bpws:variable name="variable"
+                        sca-bpel:internal="true" type="xsd:boolean"/>
+                    <bpws:variable name="FaultName"
+                        sca-bpel:internal="true" type="xsd:string"/>
+                    <bpws:variable element="ns:FaultDetail"
+                        name="FaultDetails" sca-bpel:internal="true"/>
+                </bpws:variables>
+                <bpws:repeatUntil name="repeatUntil" tibex:counterName="k">
+                    <tibex:DesignExpression>
+                        <tibex:expression
+                            expression="$k > $CORE_AUDIT-SvcProp-MonitoringLogicLookup-lookupRetryNo" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                    </tibex:DesignExpression>
+                    <bpws:scope name="innerScope">
+                        <bpws:faultHandlers>
+                            <bpws:catchAll
+                                tibex:faultDetailsVar="FaultDetails" tibex:faultNameVar="FaultName">
+                                <bpws:if name="if">
+                                    <bpws:condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[$k > $CORE_AUDIT-SvcProp-MonitoringLogicLookup-lookupRetryNo]]></bpws:condition>
+                                    <bpws:rethrow name="Rethrow"/>
+                                    <bpws:else>
+                                    <bpws:assign name="Assign" validate="no">
+                                    <bpws:copy>
+                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[false()]]></bpws:from>
+                                    <bpws:to variable="variable"/>
+                                    </bpws:copy>
+                                    </bpws:assign>
+                                    </bpws:else>
+                                </bpws:if>
+                            </bpws:catchAll>
+                        </bpws:faultHandlers>
+                        <bpws:flow name="GroupSelect">
+                            <bpws:links>
+                                <bpws:link name="GroupStart-to-Sleep"
+                                    tibex:label="retry" tibex:linkType="SUCCESSWITHCONDITION"/>
+                                <bpws:link
+                                    name="GroupStart-to-SelectRules"
+                                    tibex:label="Otherwise" tibex:linkType="SUCCESSWITHNOCONDITION"/>
+                                <bpws:link name="Select-Prop-to-GroupEnd"/>
+                                <bpws:link
+                                    name="SelectRules-to-GroupEnd"
+                                    tibex:label="Otherwise" tibex:linkType="SUCCESSWITHNOCONDITION"/>
+                                <bpws:link name="Sleep-to-SelectRules"/>
+                                <bpws:link
+                                    name="SelectRules-to-Select-Prop"
+                                    tibex:label="match rules" tibex:linkType="SUCCESSWITHCONDITION"/>
+                            </bpws:links>
+                            <bpws:empty name="GroupStart"
+                                tibex:group="groupStart" tibex:xpdlId="765dbeb8-9338-4879-8077-3eaec12affce">
+                                <bpws:sources>
+                                    <bpws:source linkName="GroupStart-to-Sleep">
+                                    <tibex:DesignExpression>
+                                    <tibex:expression
+                                    expression="$k > 1" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[$k > 1]]></bpws:transitionCondition>
+                                    </bpws:source>
+                                    <bpws:source linkName="GroupStart-to-SelectRules">
+                                    <bpws:transitionCondition><![CDATA[##otherwise##]]></bpws:transitionCondition>
+                                    </bpws:source>
+                                </bpws:sources>
+                            </bpws:empty>
+                            <bpws:assign name="GroupEnd"
+                                tibex:group="groupEnd"
+                                tibex:xpdlId="7c5e42fe-e47c-46be-b414-22c86de54511" validate="no">
+                                <bpws:targets>
+                                    <bpws:target linkName="Select-Prop-to-GroupEnd"/>
+                                    <bpws:target linkName="SelectRules-to-GroupEnd"/>
+                                </bpws:targets>
+                                <bpws:copy>
+                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[true()]]></bpws:from>
+                                    <bpws:to variable="variable"/>
+                                </bpws:copy>
+                            </bpws:assign>
+                            <bpws:extensionActivity>
+                                <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ansbw6=&quot;http://tns.tibco.com/bw/activity/sleep/xsd&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;CORE_AUDIT-SvcProp-MonitoringLogicLookup-lookupRetryDelayMS&quot;/>&#xa;    &lt;xsl:template name=&quot;Sleep-Input&quot; match=&quot;/&quot;>&#xa;        &lt;ansbw6:SleepInputSchema>&#xa;            &lt;IntervalInMillisec>&#xa;                &lt;xsl:value-of select=&quot;$CORE_AUDIT-SvcProp-MonitoringLogicLookup-lookupRetryDelayMS&quot;/>&#xa;            &lt;/IntervalInMillisec>&#xa;        &lt;/ansbw6:SleepInputSchema>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Sleep-input"
+                                    name="Sleep"
+                                    tibex:xpdlId="766f1744-ed0d-4eee-92b0-1b0ef6f6248f" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="GroupStart-to-Sleep"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="Sleep-to-SelectRules"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ansbw6=&quot;http://tns.tibco.com/bw/activity/sleep/xsd&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;CORE_AUDIT-SvcProp-MonitoringLogicLookup-lookupRetryDelayMS&quot;/>&#xa;    &lt;xsl:template name=&quot;Sleep-Input&quot; match=&quot;/&quot;>&#xa;        &lt;ansbw6:SleepInputSchema>&#xa;            &lt;IntervalInMillisec>&#xa;                &lt;xsl:value-of select=&quot;$CORE_AUDIT-SvcProp-MonitoringLogicLookup-lookupRetryDelayMS&quot;/>&#xa;            &lt;/IntervalInMillisec>&#xa;        &lt;/ansbw6:SleepInputSchema>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.sleep"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Sleep"/>
+                                    <value xsi:type="generalactivities:Sleep"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                </tibex:activityExtension>
+                            </bpws:extensionActivity>
+                            <bpws:extensionActivity>
+                                <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ansbw6=&quot;http://www.tibco.com/namespaces/tnt/plugins/jdbc+4f02eeac-6a33-489a-9784-959c9b62af42+input&quot; xmlns:pfx4=&quot;http://www.tibco.com/ESB/framework/audit/audit_msg_v1&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;Start&quot;/>&#xa;    &lt;xsl:template name=&quot;SelectRules-Input&quot; match=&quot;/&quot;>&#xa;        &lt;ansbw6:jdbcQueryActivityInput>&#xa;            &lt;COMPAREA>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:serviceContext/pfx4:area)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:area&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/COMPAREA>&#xa;            &lt;COMPNAME>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:serviceContext/pfx4:componentName)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentName&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/COMPNAME>&#xa;            &lt;COMPINST>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:serviceContext/pfx4:componentInstance)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentInstance&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/COMPINST>&#xa;            &lt;FLOWNAME>&#xa;                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowName&quot;/>&#xa;            &lt;/FLOWNAME>&#xa;            &lt;SERVICENAME>&#xa;                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceName&quot;/>&#xa;            &lt;/SERVICENAME>&#xa;            &lt;OPERATION>&#xa;                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:operation&quot;/>&#xa;            &lt;/OPERATION>&#xa;            &lt;LOGROLE>&#xa;                &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:role&quot;/>&#xa;            &lt;/LOGROLE>&#xa;            &lt;LOGCODE>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:logEvent/pfx4:code)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:code&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/LOGCODE>&#xa;            &lt;CUSTOMLOGSTEP>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:logEvent/pfx4:customStep)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:customStep&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/CUSTOMLOGSTEP>&#xa;        &lt;/ansbw6:jdbcQueryActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="SelectRules-input"
+                                    name="SelectRules"
+                                    outputVariable="SelectRules"
+                                    tibex:xpdlId="4f02eeac-6a33-489a-9784-959c9b62af42" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="GroupStart-to-SelectRules"/>
+                                    <bpws:target linkName="Sleep-to-SelectRules"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="SelectRules-to-GroupEnd">
+                                    <bpws:transitionCondition><![CDATA[##otherwise##]]></bpws:transitionCondition>
+                                    </bpws:source>
+                                    <bpws:source linkName="SelectRules-to-Select-Prop">
+                                    <tibex:DesignExpression>
+                                    <tibex:expression
+                                    expression="count($SelectRules/Record) > 0" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                                    </tibex:DesignExpression>
+                                    <bpws:transitionCondition><![CDATA[count($SelectRules/Record) > 0]]></bpws:transitionCondition>
+                                    </bpws:source>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ansbw6=&quot;http://www.tibco.com/namespaces/tnt/plugins/jdbc+4f02eeac-6a33-489a-9784-959c9b62af42+input&quot; xmlns:pfx4=&quot;http://www.tibco.com/ESB/framework/audit/audit_msg_v1&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;Start&quot;/>&#xa;    &lt;xsl:template name=&quot;SelectRules-Input&quot; match=&quot;/&quot;>&#xa;        &lt;ansbw6:jdbcQueryActivityInput>&#xa;            &lt;COMPAREA>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:serviceContext/pfx4:area)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:area&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/COMPAREA>&#xa;            &lt;COMPNAME>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:serviceContext/pfx4:componentName)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentName&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/COMPNAME>&#xa;            &lt;COMPINST>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:serviceContext/pfx4:componentInstance)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentInstance&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/COMPINST>&#xa;            &lt;FLOWNAME>&#xa;                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowName&quot;/>&#xa;            &lt;/FLOWNAME>&#xa;            &lt;SERVICENAME>&#xa;                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceName&quot;/>&#xa;            &lt;/SERVICENAME>&#xa;            &lt;OPERATION>&#xa;                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:operation&quot;/>&#xa;            &lt;/OPERATION>&#xa;            &lt;LOGROLE>&#xa;                &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:role&quot;/>&#xa;            &lt;/LOGROLE>&#xa;            &lt;LOGCODE>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:logEvent/pfx4:code)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:code&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/LOGCODE>&#xa;            &lt;CUSTOMLOGSTEP>&#xa;                &lt;xsl:choose>&#xa;                    &lt;xsl:when test=&quot;exists($Start/pfx4:logEvent/pfx4:customStep)&quot;>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:customStep&quot;/>&#xa;                    &lt;/xsl:when>&#xa;                    &lt;xsl:otherwise>&#xa;                        &lt;xsl:attribute name=&quot;xsi:nil&quot;>true&lt;/xsl:attribute>&#xa;                    &lt;/xsl:otherwise>&#xa;                &lt;/xsl:choose>&#xa;            &lt;/CUSTOMLOGSTEP>&#xa;        &lt;/ansbw6:jdbcQueryActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.jdbc.JDBCQuery"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:jdbcPalette="http://ns.tibco.com/bw/palette/jdbc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/jdbc#//JDBCQueryActivity"/>
+                                    <value
+                                    sharedResourceProperty="CORE_AUDITResourcesConnectionDBDB_CORE_AUDIT_MEMORY"
+                                    sqlStatement="SELECT&#xa;    RULEID,&#xa;    RULELABEL,&#xa;    SOLUTIONHINT,&#xa;    DOCLINK,&#xa;    DESTINATION&#xa;FROM     &#xa;    public.EVT_CATALOG&#xa;WHERE&#xa;&#x9;(S_COMPAREA=? OR S_COMPAREA='*')&#xa;    AND (S_COMPNAME=? OR S_COMPNAME='*')&#xa;    AND (S_COMPINST=? OR S_COMPINST='*')&#xa;    AND (S_FLOWNAME=? OR S_FLOWNAME='*')&#xa;    AND (S_SERVICENAME=? OR S_SERVICENAME='*')&#xa;&#x9;AND (S_OPERATION=? OR S_OPERATION='*')&#xa;    AND (S_LOGROLE=? OR S_LOGROLE='*')&#xa;    AND (S_LOGCODE=? OR S_LOGCODE='*')        &#xa;    AND (S_CUSTOMLOGSTEP=? OR S_CUSTOMLOGSTEP='*')        &#xa;ORDER BY RULEPRIORITY DESC" xsi:type="jdbcPalette:JDBCQueryActivity">
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="COMPAREA"/>
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="COMPNAME"/>
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="COMPINST"/>
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="FLOWNAME"/>
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="SERVICENAME"/>
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="OPERATION"/>
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="LOGROLE"/>
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="LOGCODE"/>
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="CUSTOMLOGSTEP"/>
+                                    <columnMetadata
+                                    columnName="RULEID"
+                                    dataType="12" typeName="VARCHAR"/>
+                                    <columnMetadata
+                                    columnName="RULELABEL"
+                                    dataType="12"
+                                    status="OptionalElement" typeName="VARCHAR"/>
+                                    <columnMetadata
+                                    columnName="SOLUTIONHINT"
+                                    dataType="12"
+                                    status="OptionalElement" typeName="VARCHAR"/>
+                                    <columnMetadata
+                                    columnName="DOCLINK"
+                                    dataType="12"
+                                    status="OptionalElement" typeName="VARCHAR"/>
+                                    <columnMetadata
+                                    columnName="DESTINATION"
+                                    dataType="12" typeName="VARCHAR"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                </tibex:activityExtension>
+                            </bpws:extensionActivity>
+                            <bpws:extensionActivity>
+                                <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ansbw6=&quot;http://www.tibco.com/namespaces/tnt/plugins/jdbc+0f44a86f-b3e5-4261-9250-512fad1ddca0+input&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;SelectRules&quot;/>&#xa;    &lt;xsl:template name=&quot;Select-Prop-Input&quot; match=&quot;/&quot;>&#xa;        &lt;ansbw6:jdbcQueryActivityInput>&#xa;            &lt;RuleIdSet>&#xa;                &lt;xsl:value-of select=&quot;tib:concat-sequence-format($SelectRules/Record/RULEID, &amp;quot;,&amp;quot;)&quot;/>&#xa;            &lt;/RuleIdSet>&#xa;        &lt;/ansbw6:jdbcQueryActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Select-Prop-input"
+                                    name="Select-Prop"
+                                    outputVariable="Select-Prop"
+                                    tibex:xpdlId="0f44a86f-b3e5-4261-9250-512fad1ddca0" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="SelectRules-to-Select-Prop"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="Select-Prop-to-GroupEnd"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ansbw6=&quot;http://www.tibco.com/namespaces/tnt/plugins/jdbc+0f44a86f-b3e5-4261-9250-512fad1ddca0+input&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;SelectRules&quot;/>&#xa;    &lt;xsl:template name=&quot;Select-Prop-Input&quot; match=&quot;/&quot;>&#xa;        &lt;ansbw6:jdbcQueryActivityInput>&#xa;            &lt;RuleIdSet>&#xa;                &lt;xsl:value-of select=&quot;tib:concat-sequence-format($SelectRules/Record/RULEID, &amp;quot;,&amp;quot;)&quot;/>&#xa;            &lt;/RuleIdSet>&#xa;        &lt;/ansbw6:jdbcQueryActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.jdbc.JDBCQuery"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:jdbcPalette="http://ns.tibco.com/bw/palette/jdbc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/jdbc#//JDBCQueryActivity"/>
+                                    <value
+                                    sharedResourceProperty="CORE_AUDITResourcesConnectionDBDB_CORE_AUDIT_MEMORY-1"
+                                    sqlStatement="SELECT &#xa;&#x9;RULEID,&#xa;&#x9;PROPNAME,&#xa;&#x9;PROPVALUE&#xa;FROM EVT_CATALOG_PROPS&#xa;WHERE&#xa;&#x9;RULEID in (?)" xsi:type="jdbcPalette:JDBCQueryActivity">
+
+                                    <PreparedParameters
+                                    DataType="12"
+                                    DataTypeDisplayValue="VARCHAR" ParameterName="RuleIdSet"/>
+                                    <columnMetadata
+                                    columnName="RULEID"
+                                    dataType="12" typeName="VARCHAR"/>
+                                    <columnMetadata
+                                    columnName="PROPNAME"
+                                    dataType="12" typeName="VARCHAR"/>
+                                    <columnMetadata
+                                    columnName="PROPVALUE"
+                                    dataType="2005" typeName="CLOB"/>
+                                    </value>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                </tibex:activityExtension>
+                            </bpws:extensionActivity>
+                        </bpws:flow>
+                    </bpws:scope>
+                    <bpws:condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[$k > $CORE_AUDIT-SvcProp-MonitoringLogicLookup-lookupRetryNo]]></bpws:condition>
+                </bpws:repeatUntil>
+            </bpws:scope>
+            <bpws:scope name="For-Each-Unique-Destination"
+                tibex:group="iterate" tibex:xpdlId="e16f7fd9-9752-41c3-a46c-eeb8acae06da">
+                <bpws:targets>
+                    <bpws:target linkName="GroupSelect-to-For-Each-Unique-Destination"/>
+                </bpws:targets>
+                <bpws:sources>
+                    <bpws:source linkName="For-Each-Unique-Destination-to-End"/>
+                </bpws:sources>
+                <bpws:forEach counterName="n" name="iterate"
+                    parallel="no" tibex:group="iterate">
+                    <tibex:DesignExpression name="variableList">
+                        <tibex:expression
+                            expression="$SelectRules/Record[not(./DESTINATION = preceding::Record/DESTINATION)]" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"/>
+                    </tibex:DesignExpression>
+                    <bpws:startCounterValue><![CDATA[1]]></bpws:startCounterValue>
+                    <bpws:finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[count($SelectRules/Record[not(./DESTINATION = preceding::Record/DESTINATION)])]]></bpws:finalCounterValue>
+                    <bpws:scope name="innerScope1">
+                        <bpws:flow name="flow">
+                            <bpws:links>
+                                <bpws:link name="GroupStart1-to-Map-MonitLogicEvent"/>
+                                <bpws:link name="JMS-Queue-Sender-to-GroupEnd1"/>
+                                <bpws:link name="Map-MonitLogicEvent-to-JMS-Queue-Sender"/>
+                            </bpws:links>
+                            <bpws:assign name="GroupStart1"
+                                tibex:group="groupStart"
+                                tibex:xpdlId="e964c85e-96f0-4266-8ffb-174a5d8f7afb" validate="no">
+                                <bpws:sources>
+                                    <bpws:source linkName="GroupStart1-to-Map-MonitLogicEvent"/>
+                                </bpws:sources>
+                                <bpws:copy>
+                                    <bpws:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"><![CDATA[($SelectRules/Record[not(./DESTINATION = preceding::Record/DESTINATION)])[number($n)]]]></bpws:from>
+                                    <bpws:to variable="currRule"/>
+                                </bpws:copy>
+                            </bpws:assign>
+                            <bpws:empty name="GroupEnd1"
+                                tibex:group="groupEnd" tibex:xpdlId="6b3754c5-9a78-4446-a423-53b3c4c0f140">
+                                <bpws:targets>
+                                    <bpws:target linkName="JMS-Queue-Sender-to-GroupEnd1"/>
+                                </bpws:targets>
+                            </bpws:empty>
+                            <bpws:extensionActivity>
+                                <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:ns6=&quot;http://www.tibco.com/ESB/framework/messaging/common_types_v1&quot; xmlns:pfx6=&quot;http://www.tibco.com/ESB/framework/Audit/monitoring_logic_event_v1&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns7=&quot;http://www.tibco.com/ESB/framework/exception_handling/svc_exception_v1&quot; xmlns:pfx4=&quot;http://www.tibco.com/ESB/framework/audit/audit_msg_v1&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;Select-Prop&quot;/>&#xa;    &lt;xsl:param name=&quot;currRule&quot;/>&#xa;    &lt;xsl:param name=&quot;Start&quot;/>&#xa;    &lt;xsl:template name=&quot;Map-MonitLogicEvent-Input&quot; match=&quot;/&quot;>&#xa;        &lt;pfx6:monitoringLogicEvent>&#xa;            &lt;pfx6:auditInfo>&#xa;                &lt;pfx6:logEventTS>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:timestamp&quot;/>&#xa;                &lt;/pfx6:logEventTS>&#xa;                &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:code&quot;>&#xa;                    &lt;pfx6:logCode>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:code&quot;/>&#xa;                    &lt;/pfx6:logCode>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:txt&quot;>&#xa;                    &lt;pfx6:logTxt>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:txt&quot;/>&#xa;                    &lt;/pfx6:logTxt>&#xa;                &lt;/xsl:if>&#xa;                &lt;pfx6:logRole>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:role&quot;/>&#xa;                &lt;/pfx6:logRole>&#xa;                &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:customStep&quot;>&#xa;                    &lt;pfx6:customLogStep>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:customStep&quot;/>&#xa;                    &lt;/pfx6:customLogStep>&#xa;                &lt;/xsl:if>&#xa;                &lt;pfx6:logProcessPath>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:processPath&quot;/>&#xa;                &lt;/pfx6:logProcessPath>&#xa;                &lt;pfx6:contextId>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:contextId&quot;/>&#xa;                &lt;/pfx6:contextId>&#xa;                &lt;pfx6:location>&#xa;                    &lt;ns6:area>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:area&quot;/>&#xa;                    &lt;/ns6:area>&#xa;                    &lt;ns6:layer>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:layer&quot;/>&#xa;                    &lt;/ns6:layer>&#xa;                    &lt;ns6:component>&#xa;                        &lt;ns6:componentName>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentName&quot;/>&#xa;                        &lt;/ns6:componentName>&#xa;                        &lt;ns6:componentInstance>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentInstance&quot;/>&#xa;                        &lt;/ns6:componentInstance>&#xa;                    &lt;/ns6:component>&#xa;                &lt;/pfx6:location>&#xa;                &lt;pfx6:flowId>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowId&quot;/>&#xa;                &lt;/pfx6:flowId>&#xa;                &lt;pfx6:serviceId>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceId&quot;/>&#xa;                &lt;/pfx6:serviceId>&#xa;                &lt;pfx6:flowName>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowName&quot;/>&#xa;                &lt;/pfx6:flowName>&#xa;                &lt;pfx6:serviceName>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceName&quot;/>&#xa;                &lt;/pfx6:serviceName>&#xa;                &lt;pfx6:operation>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:operation&quot;/>&#xa;                &lt;/pfx6:operation>&#xa;                &lt;xsl:if test=&quot;$Start/pfx4:serviceContext/pfx4:resubmitCount&quot;>&#xa;                    &lt;pfx6:resubmitCount>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:resubmitCount&quot;/>&#xa;                    &lt;/pfx6:resubmitCount>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;exists($Start/pfx4:logEvent/pfx4:error)&quot;>&#xa;                    &lt;ns7:svcException>&#xa;                        &lt;ns7:timeStamp>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:timestamp&quot;/>&#xa;                        &lt;/ns7:timeStamp>&#xa;                        &lt;ns7:processPath>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:processPath&quot;/>&#xa;                        &lt;/ns7:processPath>&#xa;                        &lt;ns7:processStack>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errProcessStack&quot;/>&#xa;                        &lt;/ns7:processStack>&#xa;                        &lt;ns7:code>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:code&quot;/>&#xa;                        &lt;/ns7:code>&#xa;                        &lt;ns7:desc>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:txt&quot;/>&#xa;                        &lt;/ns7:desc>&#xa;                        &lt;ns7:type>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errType&quot;/>&#xa;                        &lt;/ns7:type>&#xa;                        &lt;ns7:severity>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errSeverity&quot;/>&#xa;                        &lt;/ns7:severity>&#xa;                        &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errInputData&quot;>&#xa;                            &lt;ns7:inputData>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errInputData&quot;/>&#xa;                            &lt;/ns7:inputData>&#xa;                        &lt;/xsl:if>&#xa;                        &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errStackTrace&quot;>&#xa;                            &lt;ns7:stackTrace>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errStackTrace&quot;/>&#xa;                            &lt;/ns7:stackTrace>&#xa;                        &lt;/xsl:if>&#xa;                    &lt;/ns7:svcException>&#xa;                &lt;/xsl:if>&#xa;            &lt;/pfx6:auditInfo>&#xa;            &lt;pfx6:monitoringLogic>&#xa;                &lt;xsl:if test=&quot;exists($Start/pfx4:logEvent/pfx4:monitoringLogicProps)&quot;>&#xa;                    &lt;ns6:enableMonitoringLogic>&#xa;                        &lt;xsl:value-of select=&quot;true()&quot;/>&#xa;                    &lt;/ns6:enableMonitoringLogic>&#xa;                    &lt;ns6:monitoringProperties>&#xa;                        &lt;ns6:nvpList>&#xa;                            &lt;xsl:for-each select=&quot;$Start/pfx4:logEvent/pfx4:monitoringLogicProps/pfx4:nvpElement&quot;>&#xa;                                &lt;ns6:nvpElement>&#xa;                                    &lt;xsl:attribute name=&quot;name&quot;>&#xa;                                        &lt;xsl:value-of select=&quot;pfx4:name&quot;/>&#xa;                                    &lt;/xsl:attribute>&#xa;                                    &lt;xsl:attribute name=&quot;value&quot;>&#xa;                                        &lt;xsl:value-of select=&quot;pfx4:value&quot;/>&#xa;                                    &lt;/xsl:attribute>&#xa;                                &lt;/ns6:nvpElement>&#xa;                            &lt;/xsl:for-each>&#xa;                        &lt;/ns6:nvpList>&#xa;                    &lt;/ns6:monitoringProperties>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;exists($Start/pfx4:logEvent/pfx4:monitoringLogicBody)&quot;>&#xa;                    &lt;ns6:monitoringBody>&#xa;                        &lt;xsl:copy-of select=&quot;$Start/pfx4:logEvent/pfx4:monitoringLogicBody&quot;/>&#xa;                    &lt;/ns6:monitoringBody>&#xa;                &lt;/xsl:if>&#xa;            &lt;/pfx6:monitoringLogic>&#xa;            &lt;pfx6:monitoringRule>&#xa;                &lt;pfx6:ruleId>&#xa;                    &lt;xsl:value-of select=&quot;$currRule/RULEID&quot;/>&#xa;                &lt;/pfx6:ruleId>&#xa;                &lt;xsl:if test=&quot;not(($currRule/RULELABEL/@xsi:nil = (&amp;quot;true&amp;quot;)) or ($currRule/RULELABEL/@xsi:nil = (&amp;quot;1&amp;quot;)))&quot;>&#xa;                    &lt;pfx6:ruleLabel>&#xa;                        &lt;xsl:value-of select=&quot;$currRule/RULELABEL&quot;/>&#xa;                    &lt;/pfx6:ruleLabel>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;not(($currRule/SOLUTIONHINT/@xsi:nil = (&amp;quot;true&amp;quot;)) or ($currRule/SOLUTIONHINT/@xsi:nil = (&amp;quot;1&amp;quot;)))&quot;>&#xa;                    &lt;pfx6:ruleSolutionHint>&#xa;                        &lt;xsl:value-of select=&quot;$currRule/SOLUTIONHINT&quot;/>&#xa;                    &lt;/pfx6:ruleSolutionHint>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;not(($currRule/DOCLINK/@xsi:nil = (&amp;quot;true&amp;quot;)) or ($currRule/DOCLINK/@xsi:nil = (&amp;quot;1&amp;quot;)))&quot;>&#xa;                    &lt;pfx6:ruleDocLink>&#xa;                        &lt;xsl:value-of select=&quot;$currRule/DOCLINK&quot;/>&#xa;                    &lt;/pfx6:ruleDocLink>&#xa;                &lt;/xsl:if>&#xa;                &lt;pfx6:destination>&#xa;                    &lt;xsl:value-of select=&quot;$currRule/DESTINATION&quot;/>&#xa;                &lt;/pfx6:destination>&#xa;                &lt;xsl:variable name=&quot;var2&quot; select=&quot;$currRule/RULEID&quot;/>&#xa;                &lt;xsl:if test=&quot;count($Select-Prop/Record[RULEID = $var2]) > 0&quot;>&#xa;                    &lt;pfx6:ruleProperties>&#xa;                        &lt;ns6:nvpList>&#xa;                            &lt;xsl:variable name=&quot;var&quot; select=&quot;$currRule/RULEID&quot;/>&#xa;                            &lt;xsl:for-each select=&quot;$Select-Prop/Record[RULEID = $var]&quot;>&#xa;                                &lt;ns6:nvpElement>&#xa;                                    &lt;xsl:attribute name=&quot;name&quot;>&#xa;                                        &lt;xsl:value-of select=&quot;PROPNAME&quot;/>&#xa;                                    &lt;/xsl:attribute>&#xa;                                    &lt;xsl:attribute name=&quot;value&quot;>&#xa;                                        &lt;xsl:value-of select=&quot;PROPVALUE&quot;/>&#xa;                                    &lt;/xsl:attribute>&#xa;                                &lt;/ns6:nvpElement>&#xa;                            &lt;/xsl:for-each>&#xa;                        &lt;/ns6:nvpList>&#xa;                    &lt;/pfx6:ruleProperties>&#xa;                &lt;/xsl:if>&#xa;            &lt;/pfx6:monitoringRule>&#xa;        &lt;/pfx6:monitoringLogicEvent>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="Map-MonitLogicEvent-input"
+                                    name="Map-MonitLogicEvent"
+                                    outputVariable="Map-MonitLogicEvent"
+                                    tibex:xpdlId="b66f4cd4-0a2f-4b26-87ef-1f1014e5ed65" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="GroupStart1-to-Map-MonitLogicEvent"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="Map-MonitLogicEvent-to-JMS-Queue-Sender"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:ns6=&quot;http://www.tibco.com/ESB/framework/messaging/common_types_v1&quot; xmlns:pfx6=&quot;http://www.tibco.com/ESB/framework/Audit/monitoring_logic_event_v1&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ns7=&quot;http://www.tibco.com/ESB/framework/exception_handling/svc_exception_v1&quot; xmlns:pfx4=&quot;http://www.tibco.com/ESB/framework/audit/audit_msg_v1&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;Select-Prop&quot;/>&#xa;    &lt;xsl:param name=&quot;currRule&quot;/>&#xa;    &lt;xsl:param name=&quot;Start&quot;/>&#xa;    &lt;xsl:template name=&quot;Map-MonitLogicEvent-Input&quot; match=&quot;/&quot;>&#xa;        &lt;pfx6:monitoringLogicEvent>&#xa;            &lt;pfx6:auditInfo>&#xa;                &lt;pfx6:logEventTS>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:timestamp&quot;/>&#xa;                &lt;/pfx6:logEventTS>&#xa;                &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:code&quot;>&#xa;                    &lt;pfx6:logCode>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:code&quot;/>&#xa;                    &lt;/pfx6:logCode>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:txt&quot;>&#xa;                    &lt;pfx6:logTxt>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:txt&quot;/>&#xa;                    &lt;/pfx6:logTxt>&#xa;                &lt;/xsl:if>&#xa;                &lt;pfx6:logRole>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:role&quot;/>&#xa;                &lt;/pfx6:logRole>&#xa;                &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:customStep&quot;>&#xa;                    &lt;pfx6:customLogStep>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:customStep&quot;/>&#xa;                    &lt;/pfx6:customLogStep>&#xa;                &lt;/xsl:if>&#xa;                &lt;pfx6:logProcessPath>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:processPath&quot;/>&#xa;                &lt;/pfx6:logProcessPath>&#xa;                &lt;pfx6:contextId>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:contextId&quot;/>&#xa;                &lt;/pfx6:contextId>&#xa;                &lt;pfx6:location>&#xa;                    &lt;ns6:area>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:area&quot;/>&#xa;                    &lt;/ns6:area>&#xa;                    &lt;ns6:layer>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:layer&quot;/>&#xa;                    &lt;/ns6:layer>&#xa;                    &lt;ns6:component>&#xa;                        &lt;ns6:componentName>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentName&quot;/>&#xa;                        &lt;/ns6:componentName>&#xa;                        &lt;ns6:componentInstance>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentInstance&quot;/>&#xa;                        &lt;/ns6:componentInstance>&#xa;                    &lt;/ns6:component>&#xa;                &lt;/pfx6:location>&#xa;                &lt;pfx6:flowId>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowId&quot;/>&#xa;                &lt;/pfx6:flowId>&#xa;                &lt;pfx6:serviceId>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceId&quot;/>&#xa;                &lt;/pfx6:serviceId>&#xa;                &lt;pfx6:flowName>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowName&quot;/>&#xa;                &lt;/pfx6:flowName>&#xa;                &lt;pfx6:serviceName>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceName&quot;/>&#xa;                &lt;/pfx6:serviceName>&#xa;                &lt;pfx6:operation>&#xa;                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:operation&quot;/>&#xa;                &lt;/pfx6:operation>&#xa;                &lt;xsl:if test=&quot;$Start/pfx4:serviceContext/pfx4:resubmitCount&quot;>&#xa;                    &lt;pfx6:resubmitCount>&#xa;                        &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:resubmitCount&quot;/>&#xa;                    &lt;/pfx6:resubmitCount>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;exists($Start/pfx4:logEvent/pfx4:error)&quot;>&#xa;                    &lt;ns7:svcException>&#xa;                        &lt;ns7:timeStamp>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:timestamp&quot;/>&#xa;                        &lt;/ns7:timeStamp>&#xa;                        &lt;ns7:processPath>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:processPath&quot;/>&#xa;                        &lt;/ns7:processPath>&#xa;                        &lt;ns7:processStack>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errProcessStack&quot;/>&#xa;                        &lt;/ns7:processStack>&#xa;                        &lt;ns7:code>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:code&quot;/>&#xa;                        &lt;/ns7:code>&#xa;                        &lt;ns7:desc>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:txt&quot;/>&#xa;                        &lt;/ns7:desc>&#xa;                        &lt;ns7:type>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errType&quot;/>&#xa;                        &lt;/ns7:type>&#xa;                        &lt;ns7:severity>&#xa;                            &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errSeverity&quot;/>&#xa;                        &lt;/ns7:severity>&#xa;                        &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errInputData&quot;>&#xa;                            &lt;ns7:inputData>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errInputData&quot;/>&#xa;                            &lt;/ns7:inputData>&#xa;                        &lt;/xsl:if>&#xa;                        &lt;xsl:if test=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errStackTrace&quot;>&#xa;                            &lt;ns7:stackTrace>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:logEvent/pfx4:error/pfx4:errStackTrace&quot;/>&#xa;                            &lt;/ns7:stackTrace>&#xa;                        &lt;/xsl:if>&#xa;                    &lt;/ns7:svcException>&#xa;                &lt;/xsl:if>&#xa;            &lt;/pfx6:auditInfo>&#xa;            &lt;pfx6:monitoringLogic>&#xa;                &lt;xsl:if test=&quot;exists($Start/pfx4:logEvent/pfx4:monitoringLogicProps)&quot;>&#xa;                    &lt;ns6:enableMonitoringLogic>&#xa;                        &lt;xsl:value-of select=&quot;true()&quot;/>&#xa;                    &lt;/ns6:enableMonitoringLogic>&#xa;                    &lt;ns6:monitoringProperties>&#xa;                        &lt;ns6:nvpList>&#xa;                            &lt;xsl:for-each select=&quot;$Start/pfx4:logEvent/pfx4:monitoringLogicProps/pfx4:nvpElement&quot;>&#xa;                                &lt;ns6:nvpElement>&#xa;                                    &lt;xsl:attribute name=&quot;name&quot;>&#xa;                                        &lt;xsl:value-of select=&quot;pfx4:name&quot;/>&#xa;                                    &lt;/xsl:attribute>&#xa;                                    &lt;xsl:attribute name=&quot;value&quot;>&#xa;                                        &lt;xsl:value-of select=&quot;pfx4:value&quot;/>&#xa;                                    &lt;/xsl:attribute>&#xa;                                &lt;/ns6:nvpElement>&#xa;                            &lt;/xsl:for-each>&#xa;                        &lt;/ns6:nvpList>&#xa;                    &lt;/ns6:monitoringProperties>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;exists($Start/pfx4:logEvent/pfx4:monitoringLogicBody)&quot;>&#xa;                    &lt;ns6:monitoringBody>&#xa;                        &lt;xsl:copy-of select=&quot;$Start/pfx4:logEvent/pfx4:monitoringLogicBody&quot;/>&#xa;                    &lt;/ns6:monitoringBody>&#xa;                &lt;/xsl:if>&#xa;            &lt;/pfx6:monitoringLogic>&#xa;            &lt;pfx6:monitoringRule>&#xa;                &lt;pfx6:ruleId>&#xa;                    &lt;xsl:value-of select=&quot;$currRule/RULEID&quot;/>&#xa;                &lt;/pfx6:ruleId>&#xa;                &lt;xsl:if test=&quot;not(($currRule/RULELABEL/@xsi:nil = (&amp;quot;true&amp;quot;)) or ($currRule/RULELABEL/@xsi:nil = (&amp;quot;1&amp;quot;)))&quot;>&#xa;                    &lt;pfx6:ruleLabel>&#xa;                        &lt;xsl:value-of select=&quot;$currRule/RULELABEL&quot;/>&#xa;                    &lt;/pfx6:ruleLabel>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;not(($currRule/SOLUTIONHINT/@xsi:nil = (&amp;quot;true&amp;quot;)) or ($currRule/SOLUTIONHINT/@xsi:nil = (&amp;quot;1&amp;quot;)))&quot;>&#xa;                    &lt;pfx6:ruleSolutionHint>&#xa;                        &lt;xsl:value-of select=&quot;$currRule/SOLUTIONHINT&quot;/>&#xa;                    &lt;/pfx6:ruleSolutionHint>&#xa;                &lt;/xsl:if>&#xa;                &lt;xsl:if test=&quot;not(($currRule/DOCLINK/@xsi:nil = (&amp;quot;true&amp;quot;)) or ($currRule/DOCLINK/@xsi:nil = (&amp;quot;1&amp;quot;)))&quot;>&#xa;                    &lt;pfx6:ruleDocLink>&#xa;                        &lt;xsl:value-of select=&quot;$currRule/DOCLINK&quot;/>&#xa;                    &lt;/pfx6:ruleDocLink>&#xa;                &lt;/xsl:if>&#xa;                &lt;pfx6:destination>&#xa;                    &lt;xsl:value-of select=&quot;$currRule/DESTINATION&quot;/>&#xa;                &lt;/pfx6:destination>&#xa;                &lt;xsl:variable name=&quot;var2&quot; select=&quot;$currRule/RULEID&quot;/>&#xa;                &lt;xsl:if test=&quot;count($Select-Prop/Record[RULEID = $var2]) > 0&quot;>&#xa;                    &lt;pfx6:ruleProperties>&#xa;                        &lt;ns6:nvpList>&#xa;                            &lt;xsl:variable name=&quot;var&quot; select=&quot;$currRule/RULEID&quot;/>&#xa;                            &lt;xsl:for-each select=&quot;$Select-Prop/Record[RULEID = $var]&quot;>&#xa;                                &lt;ns6:nvpElement>&#xa;                                    &lt;xsl:attribute name=&quot;name&quot;>&#xa;                                        &lt;xsl:value-of select=&quot;PROPNAME&quot;/>&#xa;                                    &lt;/xsl:attribute>&#xa;                                    &lt;xsl:attribute name=&quot;value&quot;>&#xa;                                        &lt;xsl:value-of select=&quot;PROPVALUE&quot;/>&#xa;                                    &lt;/xsl:attribute>&#xa;                                &lt;/ns6:nvpElement>&#xa;                            &lt;/xsl:for-each>&#xa;                        &lt;/ns6:nvpList>&#xa;                    &lt;/pfx6:ruleProperties>&#xa;                &lt;/xsl:if>&#xa;            &lt;/pfx6:monitoringRule>&#xa;        &lt;/pfx6:monitoringLogicEvent>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.generalactivities.mapper"
+                                    version="6.0.0.001"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:generalactivities="http://ns.tibco.com/bw/palette/generalactivities"
+                                    xmlns:monitoring_logic_event_v1="http://www.tibco.com/ESB/framework/Audit/monitoring_logic_event_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/generalactivities#//Mapper"/>
+                                    <value
+                                    inputQName="monitoring_logic_event_v1:monitoringLogicEvent" xsi:type="generalactivities:Mapper"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                </tibex:activityExtension>
+                            </bpws:extensionActivity>
+                            <bpws:extensionActivity>
+                                <tibex:activityExtension
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:pfx6=&quot;http://www.tibco.com/ESB/framework/Audit/monitoring_logic_event_v1&quot; xmlns:pfx7=&quot;http://www.tibco.com/ESB/framework/messaging/xml_msg_v1&quot; xmlns:pfx=&quot;http://www.tibco.com/pe/DeployedVarsType&quot; xmlns:pfx4=&quot;http://www.tibco.com/ESB/framework/audit/audit_msg_v1&quot; xmlns:pfx5=&quot;http://www.tibco.com/ESB/framework/context/process_context_v1&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:ns0=&quot;http://www.tibco.com/namespaces/tnt/plugins/jms+bee8ecab-ddad-46f6-8412-5e0683ba1808+input&quot; xmlns:bwCustomFunctions=&quot;java://com.tibco.tibcobw.customfunctions.bwCustomFunctions&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:ns1=&quot;www.tibco.com/plugin/Sleep&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns6=&quot;http://www.tibco.com/ESB/framework/messaging/common_types_v1&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ansbw6=&quot;http://www.tibco.com/namespaces/tnt/plugins/jms+bee8ecab-ddad-46f6-8412-5e0683ba1808+input&quot; xmlns:ns7=&quot;http://www.tibco.com/ESB/framework/exception_handling/svc_exception_v1&quot; xmlns:ns72=&quot;http://www.tibco.com/ESB/framework/messaging/msg_header_v1&quot; xmlns:pd=&quot;http://xmlns.tibco.com/bw/process/2003&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;Map-MonitLogicEvent&quot;/>&#xa;    &lt;xsl:param name=&quot;Start&quot;/>&#xa;    &lt;xsl:param name=&quot;currRule&quot;/>&#xa;    &lt;xsl:template name=&quot;JMS-Queue-Sender-Input&quot; match=&quot;/&quot;>&#xa;        &lt;ansbw6:ActivityInput>&#xa;            &lt;destination>&#xa;                &lt;xsl:value-of select=&quot;$currRule/DESTINATION&quot;/>&#xa;            &lt;/destination>&#xa;            &lt;Body>&#xa;                &lt;pfx7:xmlMsg>&#xa;                    &lt;pfx7:msgHeader>&#xa;                        &lt;ns72:msgTimestamp>&#xa;                            &lt;xsl:value-of select=&quot;current-dateTime()&quot;/>&#xa;                        &lt;/ns72:msgTimestamp>&#xa;                        &lt;ns72:msgId>&#xa;                            &lt;xsl:value-of select=&quot;bwCustomFunctions:getGUID()&quot;/>&#xa;                        &lt;/ns72:msgId>&#xa;                        &lt;ns72:sourceLocation>&#xa;                            &lt;ns6:area>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:area&quot;/>&#xa;                            &lt;/ns6:area>&#xa;                            &lt;ns6:layer>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:layer&quot;/>&#xa;                            &lt;/ns6:layer>&#xa;                            &lt;ns6:component>&#xa;                                &lt;ns6:componentName>&#xa;                                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentName&quot;/>&#xa;                                &lt;/ns6:componentName>&#xa;                                &lt;ns6:componentInstance>&#xa;                                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentInstance&quot;/>&#xa;                                &lt;/ns6:componentInstance>&#xa;                            &lt;/ns6:component>&#xa;                        &lt;/ns72:sourceLocation>&#xa;                        &lt;ns72:msgFlowContext>&#xa;                            &lt;ns6:flowName>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowName&quot;/>&#xa;                            &lt;/ns6:flowName>&#xa;                            &lt;ns6:flowId>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowId&quot;/>&#xa;                            &lt;/ns6:flowId>&#xa;                            &lt;ns6:serviceName>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceName&quot;/>&#xa;                            &lt;/ns6:serviceName>&#xa;                            &lt;ns6:serviceId>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceId&quot;/>&#xa;                            &lt;/ns6:serviceId>&#xa;                            &lt;ns6:ctxId>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:contextId&quot;/>&#xa;                            &lt;/ns6:ctxId>&#xa;                        &lt;/ns72:msgFlowContext>&#xa;                        &lt;ns72:msgAction>&#xa;                            &lt;xsl:value-of select=&quot;&amp;quot;MonitoringLogicEvent.Dispatch&amp;quot;&quot;/>&#xa;                        &lt;/ns72:msgAction>&#xa;                    &lt;/pfx7:msgHeader>&#xa;                    &lt;pfx7:body>&#xa;                        &lt;xsl:copy-of select=&quot;$Map-MonitLogicEvent/pfx6:monitoringLogicEvent&quot;/>&#xa;                    &lt;/pfx7:body>&#xa;                &lt;/pfx7:xmlMsg>&#xa;            &lt;/Body>&#xa;        &lt;/ansbw6:ActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>"
+                                    expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"
+                                    inputVariable="JMS-Queue-Sender-input"
+                                    name="JMS-Queue-Sender"
+                                    outputVariable="JMS-Queue-Sender"
+                                    tibex:xpdlId="bee8ecab-ddad-46f6-8412-5e0683ba1808" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                                    <bpws:targets>
+                                    <bpws:target linkName="Map-MonitLogicEvent-to-JMS-Queue-Sender"/>
+                                    </bpws:targets>
+                                    <bpws:sources>
+                                    <bpws:source linkName="JMS-Queue-Sender-to-GroupEnd1"/>
+                                    </bpws:sources>
+                                    <tibex:inputBindings>
+                                    <tibex:inputBinding
+                                    expression="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xa;&lt;xsl:stylesheet xmlns:pfx6=&quot;http://www.tibco.com/ESB/framework/Audit/monitoring_logic_event_v1&quot; xmlns:pfx7=&quot;http://www.tibco.com/ESB/framework/messaging/xml_msg_v1&quot; xmlns:pfx=&quot;http://www.tibco.com/pe/DeployedVarsType&quot; xmlns:pfx4=&quot;http://www.tibco.com/ESB/framework/audit/audit_msg_v1&quot; xmlns:pfx5=&quot;http://www.tibco.com/ESB/framework/context/process_context_v1&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:ns0=&quot;http://www.tibco.com/namespaces/tnt/plugins/jms+bee8ecab-ddad-46f6-8412-5e0683ba1808+input&quot; xmlns:bwCustomFunctions=&quot;java://com.tibco.tibcobw.customfunctions.bwCustomFunctions&quot; xmlns:tib=&quot;http://www.tibco.com/bw/xslt/custom-functions&quot; xmlns:ns1=&quot;www.tibco.com/plugin/Sleep&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:ns6=&quot;http://www.tibco.com/ESB/framework/messaging/common_types_v1&quot; xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot; xmlns:ansbw6=&quot;http://www.tibco.com/namespaces/tnt/plugins/jms+bee8ecab-ddad-46f6-8412-5e0683ba1808+input&quot; xmlns:ns7=&quot;http://www.tibco.com/ESB/framework/exception_handling/svc_exception_v1&quot; xmlns:ns72=&quot;http://www.tibco.com/ESB/framework/messaging/msg_header_v1&quot; xmlns:pd=&quot;http://xmlns.tibco.com/bw/process/2003&quot; version=&quot;1.0&quot;>&#xa;    &lt;xsl:param name=&quot;Map-MonitLogicEvent&quot;/>&#xa;    &lt;xsl:param name=&quot;Start&quot;/>&#xa;    &lt;xsl:param name=&quot;currRule&quot;/>&#xa;    &lt;xsl:template name=&quot;JMS-Queue-Sender-Input&quot; match=&quot;/&quot;>&#xa;        &lt;ansbw6:ActivityInput>&#xa;            &lt;destination>&#xa;                &lt;xsl:value-of select=&quot;$currRule/DESTINATION&quot;/>&#xa;            &lt;/destination>&#xa;            &lt;Body>&#xa;                &lt;pfx7:xmlMsg>&#xa;                    &lt;pfx7:msgHeader>&#xa;                        &lt;ns72:msgTimestamp>&#xa;                            &lt;xsl:value-of select=&quot;current-dateTime()&quot;/>&#xa;                        &lt;/ns72:msgTimestamp>&#xa;                        &lt;ns72:msgId>&#xa;                            &lt;xsl:value-of select=&quot;bwCustomFunctions:getGUID()&quot;/>&#xa;                        &lt;/ns72:msgId>&#xa;                        &lt;ns72:sourceLocation>&#xa;                            &lt;ns6:area>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:area&quot;/>&#xa;                            &lt;/ns6:area>&#xa;                            &lt;ns6:layer>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:layer&quot;/>&#xa;                            &lt;/ns6:layer>&#xa;                            &lt;ns6:component>&#xa;                                &lt;ns6:componentName>&#xa;                                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentName&quot;/>&#xa;                                &lt;/ns6:componentName>&#xa;                                &lt;ns6:componentInstance>&#xa;                                    &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:componentInstance&quot;/>&#xa;                                &lt;/ns6:componentInstance>&#xa;                            &lt;/ns6:component>&#xa;                        &lt;/ns72:sourceLocation>&#xa;                        &lt;ns72:msgFlowContext>&#xa;                            &lt;ns6:flowName>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowName&quot;/>&#xa;                            &lt;/ns6:flowName>&#xa;                            &lt;ns6:flowId>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:flowId&quot;/>&#xa;                            &lt;/ns6:flowId>&#xa;                            &lt;ns6:serviceName>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceName&quot;/>&#xa;                            &lt;/ns6:serviceName>&#xa;                            &lt;ns6:serviceId>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:serviceId&quot;/>&#xa;                            &lt;/ns6:serviceId>&#xa;                            &lt;ns6:ctxId>&#xa;                                &lt;xsl:value-of select=&quot;$Start/pfx4:serviceContext/pfx4:contextId&quot;/>&#xa;                            &lt;/ns6:ctxId>&#xa;                        &lt;/ns72:msgFlowContext>&#xa;                        &lt;ns72:msgAction>&#xa;                            &lt;xsl:value-of select=&quot;&amp;quot;MonitoringLogicEvent.Dispatch&amp;quot;&quot;/>&#xa;                        &lt;/ns72:msgAction>&#xa;                    &lt;/pfx7:msgHeader>&#xa;                    &lt;pfx7:body>&#xa;                        &lt;xsl:copy-of select=&quot;$Map-MonitLogicEvent/pfx6:monitoringLogicEvent&quot;/>&#xa;                    &lt;/pfx7:body>&#xa;                &lt;/pfx7:xmlMsg>&#xa;            &lt;/Body>&#xa;        &lt;/ansbw6:ActivityInput>&#xa;    &lt;/xsl:template>&#xa;&lt;/xsl:stylesheet>" expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xslt1.0"/>
+                                    </tibex:inputBindings>
+                                    <tibex:config>
+                                    <bwext:BWActivity
+                                    activityTypeID="bw.jms.send"
+                                    version="6.0.0.20132205"
+                                    xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                                    xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                                    xmlns:jms="http://ns.tibco.com/bw/palette/jms"
+                                    xmlns:xml_msg_v1="http://www.tibco.com/ESB/framework/messaging/xml_msg_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                    <activityConfig>
+                                    <properties
+                                    name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/palette/jms#//JMSSenderActivityConfiguration"/>
+                                    <value
+                                    bodyTypeQName="xml_msg_v1:xmlMsg"
+                                    connectionReference="CORE_COMMONResourcesConnectionJMSJMS_LOG"
+                                    messageType="XML Text"
+                                    messagingStyle="Queue"
+                                    priority="4" xsi:type="jms:JMSSenderActivityConfiguration"/>
+                                    </properties>
+                                    </activityConfig>
+                                    </bwext:BWActivity>
+                                    </tibex:config>
+                                </tibex:activityExtension>
+                            </bpws:extensionActivity>
+                        </bpws:flow>
+                    </bpws:scope>
+                </bpws:forEach>
+            </bpws:scope>
+            <bpws:extensionActivity>
+                <tibex:activityExtension name="End"
+                    tibex:xpdlId="c9a2b749-13f2-42af-bfa5-ca73867cc297" xmlns:tibex="http://www.tibco.com/bpel/2007/extensions">
+                    <bpws:targets>
+                        <bpws:target linkName="GroupSelect-to-End"/>
+                        <bpws:target linkName="For-Each-Unique-Destination-to-End"/>
+                    </bpws:targets>
+                    <tibex:config>
+                        <bwext:BWActivity
+                            activityTypeID="bw.internal.end"
+                            xmlns:activityconfig="http://tns.tibco.com/bw/model/activityconfig"
+                            xmlns:bwext="http://tns.tibco.com/bw/model/core/bwext"
+                            xmlns:internalactivities="http://ns.tibco.com/bw/core/internalactivity" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                            <activityConfig>
+                                <properties name="config" xsi:type="activityconfig:EMFProperty">
+                                    <type href="http://ns.tibco.com/bw/core/internalactivity#//End"/>
+                                    <value xsi:type="internalactivities:End"/>
+                                </properties>
+                            </activityConfig>
+                        </bwext:BWActivity>
+                    </tibex:config>
+                </tibex:activityExtension>
+            </bpws:extensionActivity>
+        </bpws:flow>
+    </bpws:scope>
+</bpws:process>

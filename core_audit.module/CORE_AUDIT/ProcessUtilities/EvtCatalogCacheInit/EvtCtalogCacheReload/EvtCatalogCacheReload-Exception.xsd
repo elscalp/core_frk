@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:tns="http://www.dsip.com/ESB/framework/exception_handling/svc_exception_v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://xmlns.example.com/1446204694989/Exception">
+    <xs:element name="svcException" type="xs:anyType"/>
+</xs:schema>
