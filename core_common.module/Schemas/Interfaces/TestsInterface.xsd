@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:tibex="http://www.tibco.com/bpel/2007/extensions" xmlns:tns="http://www.example.com/namespaces/tns/1477410492865" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.example.com/namespaces/tns/1477410492865">
+  
+  
+  <xsd:element name="TestSourceIn" type="tns:testSource_in_type"/>
+  <xsd:complexType name="testSource_in_type">
+  	<xsd:sequence>
+  		<xsd:element name="msg" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+  	</xsd:sequence>
+  </xsd:complexType>
+  
+  
+  <xsd:element name="mainIn" type="tns:main_in_type"/>
+  <xsd:complexType name="main_in_type">
+  	<xsd:sequence>
+  		<xsd:element name="msg" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+  	</xsd:sequence>
+  </xsd:complexType>
+  
+</xsd:schema>

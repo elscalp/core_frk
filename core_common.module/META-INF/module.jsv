@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsv:DocumentRoot xmlns:jsv="http://tns.tibco.com/bw/model/core/jobSV">
+  <jobSharedVariables>
+    <jobSharedVariable name="processContext" type="{http://www.tibco.com/ESB/framework/context/process_context_v1}processContext" initialValueMode="none"/>
+  </jobSharedVariables>
+  <import importType="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/ESB/framework/context/process_context_v1"/>
+</jsv:DocumentRoot>

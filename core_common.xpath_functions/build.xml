@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="core_common.xpath_functions">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="Plug-in Dependencies.libraryclasspath">
+        <pathelement location="../../../../../opt/tibco/home/bw6/bw/6.3/system/shared/com.tibco.xml.cxf.common_1.3.300.001.jar"/>
+    </path>
+    <path id="core_common.xpath_functions.classpath">
+        <path refid="Plug-in Dependencies.libraryclasspath"/>
+        <pathelement location="bin"/>
+    </path>
+    
+
+    <target name="build">
+        <echo message="exporting ${ant.project.name}: ${ant.file}"/>
+    	<tstamp>
+	      <format property="TODAY_FR" pattern="yyyyMMdd_HHmmsssss" locale="fr,FR"/>
+	    </tstamp>
+        <zip destfile="/Users/elghazali/tibco/workspace_HEG_${TODAY_FR}.zip">
+        	<zipfileset dir=".." excludes="../.bsProject, ../.com.tibco.bw.rad, ../.metadata"/>
+        </zip>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+</project>

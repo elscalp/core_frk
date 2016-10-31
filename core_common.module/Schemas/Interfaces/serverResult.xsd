@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns="http://tibco.com/serverResult" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tibco.com/serverResult">
+  	
+	<xs:element name="serverResult">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="1" minOccurs="1" name="resultStatus" type="op_result_status_type"/>
+				<xs:element ref="opResultList" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<!---->
+	<xs:simpleType name="op_result_status_type">
+		<xs:restriction base="xs:int">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- resultList Structure -->
+	<xs:element name="opResultList" type="op_result_list_type"/>
+	
+	<xs:complexType name="op_result_list_type">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="opResult" type="op_result_type"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- result Structure -->
+	<xs:element name="opResult" type="op_result_type"/>
+	<xs:complexType name="op_result_type">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="code" type="op_result_code_type"/>
+			<xs:element minOccurs="0" name="description" type="op_result_description_type"/>
+			<xs:element minOccurs="0" name="nativeCode" type="op_result_native_code_type"/>
+			<xs:element minOccurs="0" name="nativeDescription" type="op_result_native_description_type"/>
+			<xs:element minOccurs="0" name="type" type="op_result_type_type"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!---->
+	<xs:simpleType name="op_result_code_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="op_result_description_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2048"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="op_result_native_code_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="op_result_native_description_type">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2048"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!---->
+	<xs:simpleType name="op_result_type_type">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="T"/>
+			<xs:enumeration value="B"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+
+<xs:element name="input">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:any minOccurs="0" processContents="skip"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+
+
+
+<xs:element name="output">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="replybody">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any minOccurs="0" processContents="lax"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="resultStatus" type="op_result_status_type"/>
+            <xs:element ref="opResultList" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+        
+        
+        
+        
+        
+	
+
+</xs:schema>
